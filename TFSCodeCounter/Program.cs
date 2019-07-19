@@ -28,19 +28,7 @@ namespace TFSCodeCounter
             TfsTeamProjectCollection projCollection = tpp.SelectedTeamProjectCollection;
             VersionControlServer vcs = projCollection.GetService<VersionControlServer>();
 
-            var changesetList = vcs.QueryHistory(
-                  @"$/AutoThink/DCS_AT/02_Code",
-                  VersionSpec.Latest,
-                  0,
-                  RecursionType.Full,
-                  vcs.AuthorizedUser,
-                  null,
-                  null,
-                  10,
-                  true,
-                  false).Cast<Changeset>();
-
-            Application.Run(new Form1(changesetList));
+            Application.Run(new Form1(vcs));
         }
     }
 }

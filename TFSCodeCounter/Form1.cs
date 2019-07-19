@@ -13,9 +13,21 @@ namespace TFSCodeCounter
 {
     public partial class Form1 : Form
     {
-        public Form1(IEnumerable<Changeset> changeset)
+        public Form1(VersionControlServer vcs)
         {
             InitializeComponent();
+
+            var changesetList = vcs.QueryHistory(
+                  @"$/AutoThink/DCS_AT/02_Code",
+                  VersionSpec.Latest,
+                  0,
+                  RecursionType.Full,
+                  vcs.AuthorizedUser,
+                  null,
+                  null,
+                  10,
+                  true,
+                  false).Cast<Changeset>();
         }
     }
 }
