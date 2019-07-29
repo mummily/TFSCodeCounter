@@ -21,14 +21,29 @@ namespace TFSCodeCounter
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            TeamProjectPicker tpp = new TeamProjectPicker(TeamProjectPickerMode.SingleProject, false);
-            if (DialogResult.OK != tpp.ShowDialog())
+            TeamProjectPicker picker = new TeamProjectPicker(TeamProjectPickerMode.SingleProject, false);
+            if (DialogResult.OK != picker.ShowDialog())
                 return;
 
-            TfsTeamProjectCollection projCollection = tpp.SelectedTeamProjectCollection;
-            VersionControlServer vcs = projCollection.GetService<VersionControlServer>();
+            TeamProject selectedProject = null;
 
-            Application.Run(new Form1(vcs));
+            TfsTeamProjectCollection projCollection = picker.SelectedTeamProjectCollection;
+            VersionControlServer vcs = projCollection.GetService<VersionControlServer>();
+            TeamProject[] projects = vcs.GetAllTeamProjects(true);
+            foreach (TeamProject project in projects)
+            {
+                if (project.Name == picker.SelectedProjects[0].Name)
+                {
+                    selectedProject = project;
+                    break;
+                }
+            }
+
+            if (null != selectedProject)
+            {
+                Application.Run(new Form1(selectedProject));
+            }
+
         }
     }
 }
