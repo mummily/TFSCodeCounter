@@ -41,7 +41,7 @@ namespace TFSCodeCounter
 
             if (null != selectedProject)
             {
-                Application.Run(new Form1(selectedProject));
+                Application.Run(new frmMain(selectedProject));
             }
 
         }
