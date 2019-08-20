@@ -52,10 +52,10 @@ namespace TFSCodeCounter
                   VersionSpec.Latest,
                   0,
                   RecursionType.Full,
-                  vcs.AuthorizedUser,
+                  checkBox_currentUser.Checked ? vcs.AuthorizedUser : null,
                   null,
                   null,
-                  10,
+                  System.Decimal.ToInt32(numericUpDown_Changeset.Value),
                   true,
                   false).Cast<Changeset>();
 

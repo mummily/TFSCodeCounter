@@ -35,12 +35,21 @@
             this.radioBtn_CheckAll = new System.Windows.Forms.RadioButton();
             this.radioBtn_CheckRev = new System.Windows.Forms.RadioButton();
             this.panel_RadioBtn = new System.Windows.Forms.Panel();
+            this.checkBox_currentUser = new System.Windows.Forms.CheckBox();
+            this.numericUpDown_Changeset = new System.Windows.Forms.NumericUpDown();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             this.grpBox_SearchCondtion.SuspendLayout();
             this.panel_RadioBtn.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_Changeset)).BeginInit();
             this.SuspendLayout();
             // 
             // grpBox_SearchCondtion
             // 
+            this.grpBox_SearchCondtion.Controls.Add(this.label2);
+            this.grpBox_SearchCondtion.Controls.Add(this.label1);
+            this.grpBox_SearchCondtion.Controls.Add(this.numericUpDown_Changeset);
+            this.grpBox_SearchCondtion.Controls.Add(this.checkBox_currentUser);
             this.grpBox_SearchCondtion.Controls.Add(this.btnSearch);
             this.grpBox_SearchCondtion.Dock = System.Windows.Forms.DockStyle.Top;
             this.grpBox_SearchCondtion.Location = new System.Drawing.Point(0, 0);
@@ -48,7 +57,7 @@
             this.grpBox_SearchCondtion.Size = new System.Drawing.Size(1057, 88);
             this.grpBox_SearchCondtion.TabIndex = 0;
             this.grpBox_SearchCondtion.TabStop = false;
-            this.grpBox_SearchCondtion.Text = "检索条件";
+            this.grpBox_SearchCondtion.Text = "查询条件";
             // 
             // btnSearch
             // 
@@ -58,7 +67,7 @@
             this.btnSearch.Name = "btnSearch";
             this.btnSearch.Size = new System.Drawing.Size(75, 23);
             this.btnSearch.TabIndex = 0;
-            this.btnSearch.Text = "检索";
+            this.btnSearch.Text = "查询";
             this.btnSearch.UseVisualStyleBackColor = true;
             this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
             // 
@@ -119,6 +128,56 @@
             this.panel_RadioBtn.Size = new System.Drawing.Size(200, 17);
             this.panel_RadioBtn.TabIndex = 5;
             // 
+            // checkBox_currentUser
+            // 
+            this.checkBox_currentUser.AutoSize = true;
+            this.checkBox_currentUser.Location = new System.Drawing.Point(211, 37);
+            this.checkBox_currentUser.Name = "checkBox_currentUser";
+            this.checkBox_currentUser.Size = new System.Drawing.Size(72, 16);
+            this.checkBox_currentUser.TabIndex = 1;
+            this.checkBox_currentUser.Text = "当前用户";
+            this.checkBox_currentUser.UseVisualStyleBackColor = true;
+            // 
+            // numericUpDown_Changeset
+            // 
+            this.numericUpDown_Changeset.Location = new System.Drawing.Point(43, 34);
+            this.numericUpDown_Changeset.Maximum = new decimal(new int[] {
+            100000,
+            0,
+            0,
+            0});
+            this.numericUpDown_Changeset.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numericUpDown_Changeset.Name = "numericUpDown_Changeset";
+            this.numericUpDown_Changeset.Size = new System.Drawing.Size(53, 21);
+            this.numericUpDown_Changeset.TabIndex = 2;
+            this.numericUpDown_Changeset.Value = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(8, 38);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(29, 12);
+            this.label1.TabIndex = 3;
+            this.label1.Text = "最近";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(102, 38);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(53, 12);
+            this.label2.TabIndex = 4;
+            this.label2.Text = "条变更集";
+            // 
             // frmMain
             // 
             this.AcceptButton = this.btnSearch;
@@ -133,8 +192,10 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "TFS Code Counter";
             this.grpBox_SearchCondtion.ResumeLayout(false);
+            this.grpBox_SearchCondtion.PerformLayout();
             this.panel_RadioBtn.ResumeLayout(false);
             this.panel_RadioBtn.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_Changeset)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -148,6 +209,10 @@
         private System.Windows.Forms.RadioButton radioBtn_CheckAll;
         private System.Windows.Forms.RadioButton radioBtn_CheckRev;
         private System.Windows.Forms.Panel panel_RadioBtn;
+        private System.Windows.Forms.CheckBox checkBox_currentUser;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.NumericUpDown numericUpDown_Changeset;
     }
 }
 
