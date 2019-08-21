@@ -80,32 +80,27 @@ namespace TFSCodeCounter
                 return;
             }
 
+            textBox_Output.Clear();
+
             string current = Application.StartupPath + @"\current";
-            Directory.Delete(current, true);
+            if (Directory.Exists(current))
+                Directory.Delete(current, true);
             Directory.CreateDirectory(current);
             File.SetAttributes(current, FileAttributes.Hidden);
 
             string previous = Application.StartupPath + @"\previous";
-            Directory.Delete(previous, true);
+            if (Directory.Exists(previous))
+                Directory.Delete(previous, true);
             Directory.CreateDirectory(previous);
             File.SetAttributes(previous, FileAttributes.Hidden);
 
             var items = lstView_SearchResult.CheckedItems;
             foreach (ListViewItem item in items)
             {
-                downloadFiles(current, previous, item.Text);
+                downloadFiles(current, previous, item.SubItems[1].Text);
             }
 
-            //todo : 按用户名分类
-            string result = Application.StartupPath + @"\result.txt";
-            File.Delete(result);
-
-            diffCount(current, previous, result);
-
-            if (File.Exists(result))
-            {
-                System.Diagnostics.Process.Start(result);
-            }
+            diffCount(current, previous);
         }
 
         private void downloadFiles(string current, string previous, string changsetID)
@@ -188,11 +183,10 @@ namespace TFSCodeCounter
             }
         }
 
-        private void diffCount(string current, string previous, string result)
+        private void diffCount(string current, string previous)
         {
             string cmd = "diffcount.exe ";
             cmd += previous + " " + current;
-            cmd += " > " + result;
 
             Process proc = new Process();
             proc.StartInfo.CreateNoWindow = true;
@@ -204,6 +198,16 @@ namespace TFSCodeCounter
             proc.Start();
             proc.StandardInput.WriteLine(cmd);
             proc.StandardInput.WriteLine("exit");
+
+            StreamReader reader = proc.StandardOutput;//截取输出流
+            string line = reader.ReadLine();//每次读取一行
+            while (!reader.EndOfStream)
+            {
+                line = reader.ReadLine();
+                textBox_Output.Text += line;
+                textBox_Output.Text += "\r\n";
+            }
+
             proc.Close();
         }
 
