@@ -32,6 +32,10 @@ namespace TFSCodeCounter
         /// </summary>
         private void InitControl()
         {
+            DateTime dtFrom = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1, 0, 0, 0);
+            dateTimePicker_From.Text = dtFrom.ToString();
+            dateTimePicker_To.Text = DateTime.Now.ToString();
+
             //单选时,选择整行
             this.lstView_SearchResult.FullRowSelect = true;
 
