@@ -243,18 +243,41 @@ namespace TFSCodeCounter
             string line = reader.ReadLine();//每次读取一行
             while (!reader.EndOfStream)
             {
-                line = reader.ReadLine();
-                if (line.IndexOf(">") > 0
-                    || line.IndexOf("Microsoft") > 0)
+                if (line.StartsWith("Diffcount"))
                 {
+                    break;
+                }
+
+                line = reader.ReadLine();
+            }
+
+            while (!reader.EndOfStream)
+            {
+                if (line.IndexOf(">") > 0
+                    || line.IndexOf("Convert") > 0
+                    || line.IndexOf("Total") > 0)
+                {
+                    line = reader.ReadLine();
                     continue;
+                }
+
+                if (line.StartsWith("Diffcount"))
+                {
+                    int start = line.LastIndexOf("\\");
+                    int end = line.LastIndexOf("]");
+                    line = line.Substring(start + 1, end - start - 1);
                 }
 
                 textBox_Output.Text += line;
                 textBox_Output.Text += "\r\n";
+
+                line = reader.ReadLine();
             }
 
             proc.Close();
+
+//          ADD MOD DEL A&M BLK CMT NBNC RATE 的 含义分别为：
+//          新增、修改、删除、新增+修改、空行、注释、非空非注释行、标准C折算率
         }
 
         private void radioBtn_CheckAll_Click(object sender, EventArgs e)
