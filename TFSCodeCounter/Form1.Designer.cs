@@ -29,9 +29,10 @@
         private void InitializeComponent()
         {
             this.grpBox_SearchCondtion = new System.Windows.Forms.GroupBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.numericUpDown_Changeset = new System.Windows.Forms.NumericUpDown();
+            this.dateTimePicker_To = new System.Windows.Forms.DateTimePicker();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.dateTimePicker_From = new System.Windows.Forms.DateTimePicker();
             this.checkBox_currentUser = new System.Windows.Forms.CheckBox();
             this.btnSearch = new System.Windows.Forms.Button();
             this.lstView_SearchResult = new System.Windows.Forms.ListView();
@@ -43,12 +44,7 @@
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.dateTimePicker_From = new System.Windows.Forms.DateTimePicker();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.dateTimePicker_To = new System.Windows.Forms.DateTimePicker();
             this.grpBox_SearchCondtion.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_Changeset)).BeginInit();
             this.panel_RadioBtn.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -66,9 +62,6 @@
             this.grpBox_SearchCondtion.Controls.Add(this.label4);
             this.grpBox_SearchCondtion.Controls.Add(this.label3);
             this.grpBox_SearchCondtion.Controls.Add(this.dateTimePicker_From);
-            this.grpBox_SearchCondtion.Controls.Add(this.label2);
-            this.grpBox_SearchCondtion.Controls.Add(this.label1);
-            this.grpBox_SearchCondtion.Controls.Add(this.numericUpDown_Changeset);
             this.grpBox_SearchCondtion.Controls.Add(this.checkBox_currentUser);
             this.grpBox_SearchCondtion.Controls.Add(this.btnSearch);
             this.grpBox_SearchCondtion.Location = new System.Drawing.Point(10, 4);
@@ -78,52 +71,44 @@
             this.grpBox_SearchCondtion.TabStop = false;
             this.grpBox_SearchCondtion.Text = "检索条件";
             // 
-            // label2
+            // dateTimePicker_To
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(102, 38);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(53, 12);
-            this.label2.TabIndex = 4;
-            this.label2.Text = "条变更集";
+            this.dateTimePicker_To.Location = new System.Drawing.Point(186, 32);
+            this.dateTimePicker_To.Name = "dateTimePicker_To";
+            this.dateTimePicker_To.Size = new System.Drawing.Size(104, 21);
+            this.dateTimePicker_To.TabIndex = 8;
             // 
-            // label1
+            // label4
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(8, 38);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(29, 12);
-            this.label1.TabIndex = 3;
-            this.label1.Text = "最近";
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(168, 37);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(17, 12);
+            this.label4.TabIndex = 7;
+            this.label4.Text = "～";
             // 
-            // numericUpDown_Changeset
+            // label3
             // 
-            this.numericUpDown_Changeset.Location = new System.Drawing.Point(43, 34);
-            this.numericUpDown_Changeset.Maximum = new decimal(new int[] {
-            100000,
-            0,
-            0,
-            0});
-            this.numericUpDown_Changeset.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.numericUpDown_Changeset.Name = "numericUpDown_Changeset";
-            this.numericUpDown_Changeset.Size = new System.Drawing.Size(53, 21);
-            this.numericUpDown_Changeset.TabIndex = 2;
-            this.numericUpDown_Changeset.Value = new decimal(new int[] {
-            100,
-            0,
-            0,
-            0});
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(17, 37);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(41, 12);
+            this.label3.TabIndex = 6;
+            this.label3.Text = "日期从";
+            // 
+            // dateTimePicker_From
+            // 
+            this.dateTimePicker_From.Location = new System.Drawing.Point(61, 32);
+            this.dateTimePicker_From.Name = "dateTimePicker_From";
+            this.dateTimePicker_From.Size = new System.Drawing.Size(104, 21);
+            this.dateTimePicker_From.TabIndex = 5;
             // 
             // checkBox_currentUser
             // 
             this.checkBox_currentUser.AutoSize = true;
             this.checkBox_currentUser.Checked = true;
             this.checkBox_currentUser.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox_currentUser.Location = new System.Drawing.Point(211, 37);
+            this.checkBox_currentUser.Location = new System.Drawing.Point(351, 35);
             this.checkBox_currentUser.Name = "checkBox_currentUser";
             this.checkBox_currentUser.Size = new System.Drawing.Size(72, 16);
             this.checkBox_currentUser.TabIndex = 1;
@@ -260,38 +245,6 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "输出信息";
             // 
-            // dateTimePicker_From
-            // 
-            this.dateTimePicker_From.Location = new System.Drawing.Point(381, 31);
-            this.dateTimePicker_From.Name = "dateTimePicker_From";
-            this.dateTimePicker_From.Size = new System.Drawing.Size(104, 21);
-            this.dateTimePicker_From.TabIndex = 5;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(337, 36);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(41, 12);
-            this.label3.TabIndex = 6;
-            this.label3.Text = "日期从";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(488, 36);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(17, 12);
-            this.label4.TabIndex = 7;
-            this.label4.Text = "～";
-            // 
-            // dateTimePicker_To
-            // 
-            this.dateTimePicker_To.Location = new System.Drawing.Point(506, 31);
-            this.dateTimePicker_To.Name = "dateTimePicker_To";
-            this.dateTimePicker_To.Size = new System.Drawing.Size(104, 21);
-            this.dateTimePicker_To.TabIndex = 8;
-            // 
             // frmMain
             // 
             this.AcceptButton = this.btnSearch;
@@ -305,7 +258,6 @@
             this.Text = "TFS Code Counter";
             this.grpBox_SearchCondtion.ResumeLayout(false);
             this.grpBox_SearchCondtion.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_Changeset)).EndInit();
             this.panel_RadioBtn.ResumeLayout(false);
             this.panel_RadioBtn.PerformLayout();
             this.splitContainer1.Panel1.ResumeLayout(false);
@@ -328,9 +280,6 @@
         private System.Windows.Forms.RadioButton radioBtn_CheckRev;
         private System.Windows.Forms.Panel panel_RadioBtn;
         private System.Windows.Forms.CheckBox checkBox_currentUser;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.NumericUpDown numericUpDown_Changeset;
         private System.Windows.Forms.RichTextBox textBox_Output;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.GroupBox groupBox1;

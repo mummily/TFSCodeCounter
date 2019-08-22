@@ -59,13 +59,21 @@ namespace TFSCodeCounter
                   checkBox_currentUser.Checked ? vcs.AuthorizedUser : null,
                   null,
                   null,
-                  System.Decimal.ToInt32(numericUpDown_Changeset.Value),
+                  int.MaxValue,
                   true,
                   false).Cast<Changeset>();
 
             int nIndex = 1;
             foreach (Changeset changeSet in changeSets)
             {
+                DateTime dtCreationDate = changeSet.CreationDate;
+
+                if (dtCreationDate.CompareTo(dateTimePicker_To.Value) > 0)
+                    continue;
+
+                if (dtCreationDate.CompareTo(dateTimePicker_From.Value) < 0)
+                    break;
+
                 ListViewItem item = null;
                 item = new ListViewItem();
                 item.SubItems[0].Text = (nIndex++).ToString();
@@ -81,6 +89,7 @@ namespace TFSCodeCounter
         {
             if (lstView_SearchResult.CheckedItems.Count < 1)
             {
+                textBox_Output.Text = "请选择要统计的变更集信息...";
                 return;
             }
 
@@ -99,10 +108,19 @@ namespace TFSCodeCounter
             File.SetAttributes(previous, FileAttributes.Hidden);
 
             var items = lstView_SearchResult.CheckedItems;
+            int index = 1;
             foreach (ListViewItem item in items)
             {
-                downloadFiles(current, previous, item.SubItems[1].Text);
+                string changsetID = item.SubItems[1].Text;
+
+                string outputInfo = "";
+                outputInfo = string.Format("{0}正在获取变更集信息：{1}（{2}/{3}）", ((index == 1) ? "" : "\r\n"), changsetID, index++, items.Count);
+                textBox_Output.Text += outputInfo;
+
+                downloadFiles(current, previous, changsetID);
             }
+
+            textBox_Output.Clear();
 
             diffCount(current, previous);
         }
@@ -112,7 +130,7 @@ namespace TFSCodeCounter
             try
             {
                 VersionControlServer vcs = currentPrj.VersionControlServer;
-                
+
                 var changesetList = vcs.QueryHistory(
                   currentPrj.ServerItem,
                   VersionSpec.Latest,
@@ -125,55 +143,63 @@ namespace TFSCodeCounter
                   true,
                   false).Cast<Changeset>();
 
-                foreach (var cs in changesetList)
+                if (changesetList.Count<Changeset>() != 1)
                 {
-                    Change[] changes = cs.Changes;
-                    foreach (Change change in changes)
+                    return;
+                }
+
+                Changeset changetset = changesetList.First<Changeset>();
+                string committer = changetset.Committer;
+                int pos = committer.LastIndexOf('\\');
+                if (pos > 0)
+                    committer = committer.Substring(pos + 1, committer.Length - pos - 1);
+
+                Change[] changes = changetset.Changes;
+                foreach (Change change in changes)
+                {
+                    if (change.Item == null)
+                        continue;
+
+                    string ServerItem = change.Item.ServerItem;
+
+                    var itemChgs = vcs.QueryHistory(change.Item.ServerItem,
+                        VersionSpec.Latest,
+                        0,
+                        RecursionType.Full,
+                        null,
+                        null,
+                        VersionSpec.ParseSingleSpec(changsetID, null),
+                        2,
+                        true,
+                        false);
+
+                    int index = 0;
+                    foreach (Changeset itemchg in itemChgs)
                     {
-                        if (change.Item == null)
-                            continue;
+                        string revisionpath = (index == 0) ? current : previous;
+                        string localItem = revisionpath + @"\" + committer + @"\" + changsetID;
+                        localItem += ServerItem.Substring(1);
+                        //public enum ChangeType
+                        //{
+                        //    None = 1,
+                        //    Add = 2,
+                        //    Edit = 4,
+                        //    Encoding = 8,
+                        //    Rename = 16,
+                        //    Delete = 32,
+                        //    Undelete = 64,
+                        //    Branch = 128,
+                        //    Merge = 256,
+                        //    Lock = 512,
+                        //    Rollback = 1024,
+                        //    SourceRename = 2048,
+                        //    Property = 8192
+                        //}
 
-                        string ServerItem = change.Item.ServerItem;
+                        if (!itemchg.Changes[0].ChangeType.HasFlag(ChangeType.Delete))
+                            vcs.DownloadFile(ServerItem, 0, VersionSpec.ParseSingleSpec(Convert.ToString(itemchg.ChangesetId), null), localItem);
 
-                        var itemChgs = vcs.QueryHistory(change.Item.ServerItem,
-                            VersionSpec.Latest,
-                            0,
-                            RecursionType.Full,
-                            null,
-                            null,
-                            VersionSpec.ParseSingleSpec(changsetID, null),
-                            2,
-                            true,
-                            false);
-
-                        int index = 0;
-                        foreach (Changeset itemchg in itemChgs)
-                        {
-                            string revisionpath = (index == 0) ? current : previous;
-                            string localItem = revisionpath + @"\" + changsetID;
-                            localItem += ServerItem.Substring(1);
-                            //public enum ChangeType
-                            //{
-                            //    None = 1,
-                            //    Add = 2,
-                            //    Edit = 4,
-                            //    Encoding = 8,
-                            //    Rename = 16,
-                            //    Delete = 32,
-                            //    Undelete = 64,
-                            //    Branch = 128,
-                            //    Merge = 256,
-                            //    Lock = 512,
-                            //    Rollback = 1024,
-                            //    SourceRename = 2048,
-                            //    Property = 8192
-                            //}
-
-                            if (!itemchg.Changes[0].ChangeType.HasFlag(ChangeType.Delete))
-                                vcs.DownloadFile(ServerItem, 0, VersionSpec.ParseSingleSpec(Convert.ToString(itemchg.ChangesetId), null), localItem);
-
-                            ++index;
-                        }
+                        ++index;
                     }
                 }
             }
@@ -189,8 +215,11 @@ namespace TFSCodeCounter
 
         private void diffCount(string current, string previous)
         {
-            string cmd = "diffcount.exe ";
-            cmd += previous + " " + current;
+            string[] dirs = Directory.GetDirectories(current);
+            if (dirs.Count<string>() < 1)
+            {
+                return;
+            }
 
             Process proc = new Process();
             proc.StartInfo.CreateNoWindow = true;
@@ -200,7 +229,14 @@ namespace TFSCodeCounter
             proc.StartInfo.RedirectStandardInput = true;
             proc.StartInfo.RedirectStandardOutput = true;
             proc.Start();
-            proc.StandardInput.WriteLine(cmd);
+
+            foreach (string dir in dirs)
+            {
+                DirectoryInfo dirInfo = new DirectoryInfo(dir);
+                string cmd = string.Format("diffcount.exe {0}\\{1} {2}\\{1}", previous, dirInfo.Name, current);
+                proc.StandardInput.WriteLine(cmd);
+            }
+
             proc.StandardInput.WriteLine("exit");
 
             StreamReader reader = proc.StandardOutput;//截取输出流
@@ -208,6 +244,12 @@ namespace TFSCodeCounter
             while (!reader.EndOfStream)
             {
                 line = reader.ReadLine();
+                if (line.IndexOf(">") > 0
+                    || line.IndexOf("Microsoft") > 0)
+                {
+                    continue;
+                }
+
                 textBox_Output.Text += line;
                 textBox_Output.Text += "\r\n";
             }
