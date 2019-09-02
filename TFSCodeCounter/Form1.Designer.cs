@@ -33,7 +33,6 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.dateTimePicker_From = new System.Windows.Forms.DateTimePicker();
-            this.checkBox_currentUser = new System.Windows.Forms.CheckBox();
             this.btnSearch = new System.Windows.Forms.Button();
             this.lstView_SearchResult = new System.Windows.Forms.ListView();
             this.btnCounter = new System.Windows.Forms.Button();
@@ -44,6 +43,9 @@
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.textBox_Commiter = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             this.grpBox_SearchCondtion.SuspendLayout();
             this.panel_RadioBtn.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -58,11 +60,13 @@
             // 
             this.grpBox_SearchCondtion.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.grpBox_SearchCondtion.Controls.Add(this.label2);
+            this.grpBox_SearchCondtion.Controls.Add(this.label1);
+            this.grpBox_SearchCondtion.Controls.Add(this.textBox_Commiter);
             this.grpBox_SearchCondtion.Controls.Add(this.dateTimePicker_To);
             this.grpBox_SearchCondtion.Controls.Add(this.label4);
             this.grpBox_SearchCondtion.Controls.Add(this.label3);
             this.grpBox_SearchCondtion.Controls.Add(this.dateTimePicker_From);
-            this.grpBox_SearchCondtion.Controls.Add(this.checkBox_currentUser);
             this.grpBox_SearchCondtion.Controls.Add(this.btnSearch);
             this.grpBox_SearchCondtion.Location = new System.Drawing.Point(10, 4);
             this.grpBox_SearchCondtion.Name = "grpBox_SearchCondtion";
@@ -90,7 +94,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(17, 37);
+            this.label3.Location = new System.Drawing.Point(17, 36);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(41, 12);
             this.label3.TabIndex = 6;
@@ -102,18 +106,6 @@
             this.dateTimePicker_From.Name = "dateTimePicker_From";
             this.dateTimePicker_From.Size = new System.Drawing.Size(104, 21);
             this.dateTimePicker_From.TabIndex = 5;
-            // 
-            // checkBox_currentUser
-            // 
-            this.checkBox_currentUser.AutoSize = true;
-            this.checkBox_currentUser.Checked = true;
-            this.checkBox_currentUser.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox_currentUser.Location = new System.Drawing.Point(351, 35);
-            this.checkBox_currentUser.Name = "checkBox_currentUser";
-            this.checkBox_currentUser.Size = new System.Drawing.Size(72, 16);
-            this.checkBox_currentUser.TabIndex = 1;
-            this.checkBox_currentUser.Text = "当前用户";
-            this.checkBox_currentUser.UseVisualStyleBackColor = true;
             // 
             // btnSearch
             // 
@@ -245,6 +237,31 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "输出信息";
             // 
+            // textBox_Commiter
+            // 
+            this.textBox_Commiter.Location = new System.Drawing.Point(390, 32);
+            this.textBox_Commiter.Name = "textBox_Commiter";
+            this.textBox_Commiter.Size = new System.Drawing.Size(100, 21);
+            this.textBox_Commiter.TabIndex = 9;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(496, 36);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(95, 12);
+            this.label1.TabIndex = 10;
+            this.label1.Text = "*默认全部用户";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(358, 36);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(29, 12);
+            this.label2.TabIndex = 11;
+            this.label2.Text = "用户";
+            // 
             // frmMain
             // 
             this.AcceptButton = this.btnSearch;
@@ -279,7 +296,6 @@
         private System.Windows.Forms.RadioButton radioBtn_CheckAll;
         private System.Windows.Forms.RadioButton radioBtn_CheckRev;
         private System.Windows.Forms.Panel panel_RadioBtn;
-        private System.Windows.Forms.CheckBox checkBox_currentUser;
         private System.Windows.Forms.RichTextBox textBox_Output;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.GroupBox groupBox1;
@@ -288,6 +304,9 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.DateTimePicker dateTimePicker_From;
+        private System.Windows.Forms.TextBox textBox_Commiter;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
     }
 }
 

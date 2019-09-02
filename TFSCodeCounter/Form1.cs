@@ -41,8 +41,8 @@ namespace TFSCodeCounter
 
             this.lstView_SearchResult.Columns.Add("序号", 50, HorizontalAlignment.Left);
             this.lstView_SearchResult.Columns.Add("变更集", 60, HorizontalAlignment.Left);
-            this.lstView_SearchResult.Columns.Add("用户", 150, HorizontalAlignment.Left);
-            this.lstView_SearchResult.Columns.Add("日期", 120, HorizontalAlignment.Left);
+            this.lstView_SearchResult.Columns.Add("用户", 120, HorizontalAlignment.Left);
+            this.lstView_SearchResult.Columns.Add("日期", 150, HorizontalAlignment.Left);
             this.lstView_SearchResult.Columns.Add("注释", 600, HorizontalAlignment.Left);
         }
 
@@ -56,7 +56,7 @@ namespace TFSCodeCounter
                   VersionSpec.Latest,
                   0,
                   RecursionType.Full,
-                  checkBox_currentUser.Checked ? vcs.AuthorizedUser : null,
+                  null,
                   null,
                   null,
                   int.MaxValue,
@@ -74,11 +74,23 @@ namespace TFSCodeCounter
                 if (dtCreationDate.CompareTo(dateTimePicker_From.Value) < 0)
                     break;
 
+                string commiter = changeSet.Committer;
+                int pos = commiter.LastIndexOf('\\');
+                if (pos > 0)
+                    commiter = commiter.Substring(pos + 1, commiter.Length - pos - 1);
+
+                string commiterFilter = textBox_Commiter.Text.Trim();
+                if (commiterFilter != "" && commiterFilter != commiter)
+                {
+                    continue;
+                }
+
                 ListViewItem item = null;
                 item = new ListViewItem();
                 item.SubItems[0].Text = (nIndex++).ToString();
                 item.SubItems.Add(changeSet.ChangesetId.ToString());
-                item.SubItems.Add(changeSet.Committer);
+
+                item.SubItems.Add(commiter);
                 item.SubItems.Add(changeSet.CreationDate.ToString());
                 item.SubItems.Add(changeSet.Comment);
                 this.lstView_SearchResult.Items.Add(item);
@@ -233,7 +245,7 @@ namespace TFSCodeCounter
             foreach (string dir in dirs)
             {
                 DirectoryInfo dirInfo = new DirectoryInfo(dir);
-                string cmd = string.Format("diffcount.exe {0}\\{1} {2}\\{1}", previous, dirInfo.Name, current);
+                string cmd = string.Format("diffcount.exe \"{0}\\{1}\" \"{2}\\{1}\"", previous, dirInfo.Name, current);
                 proc.StandardInput.WriteLine(cmd);
             }
 
@@ -250,6 +262,8 @@ namespace TFSCodeCounter
 
                 line = reader.ReadLine();
             }
+
+            string sOutput = "说明：\r\nLANG\tADD\tMOD\tDEL\tA&M\t\tBLK\tCMT\tNBNC\t\tRATE\r\n语言\t新增\t修改\t删除\t新增+修改\t空行\t注释\t非空非注释行\t标准C折算率\r\n\r\n";
 
             while (!reader.EndOfStream)
             {
@@ -268,16 +282,16 @@ namespace TFSCodeCounter
                     line = line.Substring(start + 1, end - start - 1);
                 }
 
-                textBox_Output.Text += line;
-                textBox_Output.Text += "\r\n";
+                sOutput += line;
+                sOutput += "\r\n";
 
                 line = reader.ReadLine();
             }
 
-            proc.Close();
+            sOutput = sOutput.Replace("\r\n\r\n\r\n\r\n", "\r\n\r\n");
+            textBox_Output.Text = sOutput;
 
-//          ADD MOD DEL A&M BLK CMT NBNC RATE 的 含义分别为：
-//          新增、修改、删除、新增+修改、空行、注释、非空非注释行、标准C折算率
+            proc.Close();
         }
 
         private void radioBtn_CheckAll_Click(object sender, EventArgs e)
