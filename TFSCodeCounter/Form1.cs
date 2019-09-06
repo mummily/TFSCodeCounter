@@ -50,50 +50,51 @@ namespace TFSCodeCounter
         {
             lstView_SearchResult.Items.Clear();
 
-            VersionControlServer vcs = currentPrj.VersionControlServer;
-            var changeSets = vcs.QueryHistory(
-                  currentPrj.ServerItem, // @"$/AutoThink/DCS_AT"
-                  VersionSpec.Latest,
-                  0,
-                  RecursionType.Full,
-                  null,
-                  null,
-                  null,
-                  int.MaxValue,
-                  true,
-                  false).Cast<Changeset>();
-
-            int nIndex = 1;
-            foreach (Changeset changeSet in changeSets)
+            try
             {
-                DateTime dtCreationDate = changeSet.CreationDate;
+                VersionControlServer vcs = currentPrj.VersionControlServer;
+                var changeSets = vcs.QueryHistory(
+                      currentPrj.ServerItem, // @"$/AutoThink/DCS_AT"
+                      VersionSpec.Latest,
+                      0,
+                      RecursionType.Full,
+                      textBox_Commiter.Text.Trim(),
+                      null,
+                      null,
+                      int.MaxValue,
+                      true,
+                      false).Cast<Changeset>();
 
-                if (dtCreationDate.CompareTo(dateTimePicker_To.Value) > 0)
-                    continue;
+                int nIndex = 1;
 
-                if (dtCreationDate.CompareTo(dateTimePicker_From.Value) < 0)
-                    break;
-
-                string commiter = changeSet.Committer;
-                int pos = commiter.LastIndexOf('\\');
-                if (pos > 0)
-                    commiter = commiter.Substring(pos + 1, commiter.Length - pos - 1);
-
-                string commiterFilter = textBox_Commiter.Text.Trim();
-                if (commiterFilter != "" && commiterFilter != commiter)
+                foreach (Changeset changeSet in changeSets)
                 {
-                    continue;
+                    DateTime dtCreationDate = changeSet.CreationDate;
+
+                    if (dtCreationDate.CompareTo(dateTimePicker_To.Value) > 0)
+                        continue;
+
+                    if (dtCreationDate.CompareTo(dateTimePicker_From.Value) < 0)
+                        break;
+
+                    string commiter = changeSet.Committer;
+                    int pos = commiter.LastIndexOf('\\');
+                    if (pos > 0)
+                        commiter = commiter.Substring(pos + 1, commiter.Length - pos - 1);
+
+                    ListViewItem item = null;
+                    item = new ListViewItem();
+                    item.SubItems[0].Text = (nIndex++).ToString();
+                    item.SubItems.Add(changeSet.ChangesetId.ToString());
+                    item.SubItems.Add(commiter);
+                    item.SubItems.Add(changeSet.CreationDate.ToString());
+                    item.SubItems.Add(changeSet.Comment);
+                    this.lstView_SearchResult.Items.Add(item);
                 }
-
-                ListViewItem item = null;
-                item = new ListViewItem();
-                item.SubItems[0].Text = (nIndex++).ToString();
-                item.SubItems.Add(changeSet.ChangesetId.ToString());
-
-                item.SubItems.Add(commiter);
-                item.SubItems.Add(changeSet.CreationDate.ToString());
-                item.SubItems.Add(changeSet.Comment);
-                this.lstView_SearchResult.Items.Add(item);
+            }
+            catch (System.Exception ex)
+            {
+                MessageBox.Show(ex.Message, this.Text);
             }
         }
 
@@ -215,13 +216,9 @@ namespace TFSCodeCounter
                     }
                 }
             }
-            catch (ChangesetNotFoundException)
+            catch (System.Exception ex)
             {
-                Console.WriteLine("!! Please check the change set id inside your config file !!");
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
+                MessageBox.Show(ex.Message, this.Text);
             }
         }
 
@@ -263,7 +260,9 @@ namespace TFSCodeCounter
                 line = reader.ReadLine();
             }
 
-            string sOutput = "说明：\r\nLANG\tADD\tMOD\tDEL\tA&M\t\tBLK\tCMT\tNBNC\t\tRATE\r\n语言\t新增\t修改\t删除\t新增+修改\t空行\t注释\t非空非注释行\t标准C折算率\r\n\r\n";
+            string sOutput = "说明：本软件使用第三方工具diffcount进行代码行数统计\r\n";
+            sOutput += "LANG\tADD\tMOD\tDEL\tA&M\t\tBLK\tCMT\tNBNC\t\tRATE\r\n";
+            sOutput += "语言\t新增\t修改\t删除\t新增+修改\t空行\t注释\t非空非注释行\t标准C折算率\r\n\r\n";
 
             while (!reader.EndOfStream)
             {
