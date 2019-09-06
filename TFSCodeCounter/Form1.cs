@@ -49,6 +49,7 @@ namespace TFSCodeCounter
         private void btnSearch_Click(object sender, EventArgs e)
         {
             lstView_SearchResult.Items.Clear();
+            checkBox_CheckAllNot.Checked = true;
 
             try
             {
@@ -260,9 +261,7 @@ namespace TFSCodeCounter
                 line = reader.ReadLine();
             }
 
-            string sOutput = "说明：本软件使用第三方工具diffcount进行代码行数统计\r\n";
-            sOutput += "LANG\tADD\tMOD\tDEL\tA&M\t\tBLK\tCMT\tNBNC\t\tRATE\r\n";
-            sOutput += "语言\t新增\t修改\t删除\t新增+修改\t空行\t注释\t非空非注释行\t标准C折算率\r\n\r\n";
+            string sOutput = "";
 
             while (!reader.EndOfStream)
             {
@@ -293,20 +292,32 @@ namespace TFSCodeCounter
             proc.Close();
         }
 
-        private void radioBtn_CheckAll_Click(object sender, EventArgs e)
+        private void checkBox_CheckAll_Click(object sender, EventArgs e)
         {
+            checkBox_CheckAllNot.Checked = false;
             foreach (ListViewItem item in lstView_SearchResult.Items)
             {
                 item.Checked = true;
             }
         }
 
-        private void radioBtn_CheckRev_Click(object sender, EventArgs e)
+        private void checkBox_CheckAllNot_Click(object sender, EventArgs e)
         {
+            checkBox_CheckAll.Checked = false;
             foreach (ListViewItem item in lstView_SearchResult.Items)
             {
-                item.Checked = !item.Checked;
+                item.Checked = false;
             }
+        }
+
+        private void MenuItem_About_Click(object sender, EventArgs e)
+        {
+            string sInfo = "软件说明：\r\n";
+            sInfo += "本软件使用第三方工具diffcount进行代码行数统计\r\n\r\n";
+            sInfo += "参数说明：\r\n";
+            sInfo += "ADD  MOD  DEL  A&M       BLK  CMT  NBNC         RATE\r\n";
+            sInfo += "新增 修改 删除 新增+修改 空行 注释 非空非注释行 标准C折算率";
+            MessageBox.Show(sInfo, "关于 TFS Code Counter");
         }
     }
 }
