@@ -51,6 +51,9 @@ namespace TFSCodeCounter
             lstView_SearchResult.Items.Clear();
             checkBox_CheckAllNot.Checked = true;
 
+            DateTime dtFrom = new DateTime(dateTimePicker_From.Value.Year, dateTimePicker_From.Value.Month, dateTimePicker_From.Value.Day, 0, 0, 0);
+            DateTime dtTo = new DateTime(dateTimePicker_To.Value.Year, dateTimePicker_To.Value.Month, dateTimePicker_To.Value.Day, 23, 59, 59);
+
             try
             {
                 VersionControlServer vcs = currentPrj.VersionControlServer;
@@ -72,10 +75,10 @@ namespace TFSCodeCounter
                 {
                     DateTime dtCreationDate = changeSet.CreationDate;
 
-                    if (dtCreationDate.CompareTo(dateTimePicker_To.Value) > 0)
+                    if (dtCreationDate.CompareTo(dtTo) > 0)
                         continue;
 
-                    if (dtCreationDate.CompareTo(dateTimePicker_From.Value) < 0)
+                    if (dtCreationDate.CompareTo(dtFrom) < 0)
                         break;
 
                     string commiter = changeSet.Committer;
@@ -175,6 +178,9 @@ namespace TFSCodeCounter
                         continue;
 
                     string ServerItem = change.Item.ServerItem;
+                    FileInfo fi = new FileInfo(ServerItem);
+                    if (fi.Extension.Length < 1) // 不是文件，而是文件夹，不比较
+                        continue;
 
                     var itemChgs = vcs.QueryHistory(change.Item.ServerItem,
                         VersionSpec.Latest,
