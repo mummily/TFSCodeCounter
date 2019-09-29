@@ -46,6 +46,41 @@ namespace TFSCodeCounter
             this.lstView_SearchResult.Columns.Add("注释", 600, HorizontalAlignment.Left);
         }
 
+        /// <summary>
+        /// 窗口关闭，删除缓存文件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void frmMain_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            string current = Application.StartupPath + @"\current";
+            try
+            {
+                if (Directory.Exists(current))
+                    Directory.Delete(current, true);
+            }
+            catch (System.Exception ex)
+            {
+                MessageBox.Show(current + "\r\n" + ex.Message, this.Text);
+            }
+
+            string previous = Application.StartupPath + @"\previous";
+            try
+            {
+                if (Directory.Exists(previous))
+                    Directory.Delete(previous, true);
+            }
+            catch (System.Exception ex)
+            {
+                MessageBox.Show(previous + "\r\n" + ex.Message, this.Text);
+            }
+        }
+
+        /// <summary>
+        /// “检索”按钮执行
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnSearch_Click(object sender, EventArgs e)
         {
             lstView_SearchResult.Items.Clear();
@@ -102,6 +137,11 @@ namespace TFSCodeCounter
             }
         }
 
+        /// <summary>
+        /// “统计”按钮执行
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnCounter_Click(object sender, EventArgs e)
         {
             if (lstView_SearchResult.CheckedItems.Count < 1)
@@ -142,6 +182,12 @@ namespace TFSCodeCounter
             diffCount(current, previous);
         }
 
+        /// <summary>
+        /// 下载文件
+        /// </summary>
+        /// <param name="current"></param>
+        /// <param name="previous"></param>
+        /// <param name="changsetID"></param>
         private void downloadFiles(string current, string previous, string changsetID)
         {
             try
@@ -229,6 +275,11 @@ namespace TFSCodeCounter
             }
         }
 
+        /// <summary>
+        /// 比较文件差异
+        /// </summary>
+        /// <param name="current"></param>
+        /// <param name="previous"></param>
         private void diffCount(string current, string previous)
         {
             string[] dirs = Directory.GetDirectories(current);
@@ -298,6 +349,11 @@ namespace TFSCodeCounter
             proc.Close();
         }
 
+        /// <summary>
+        /// 全选
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void checkBox_CheckAll_Click(object sender, EventArgs e)
         {
             checkBox_CheckAllNot.Checked = false;
@@ -307,6 +363,11 @@ namespace TFSCodeCounter
             }
         }
 
+        /// <summary>
+        /// 全不选
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void checkBox_CheckAllNot_Click(object sender, EventArgs e)
         {
             checkBox_CheckAll.Checked = false;
@@ -316,6 +377,11 @@ namespace TFSCodeCounter
             }
         }
 
+        /// <summary>
+        /// 关于
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MenuItem_About_Click(object sender, EventArgs e)
         {
             string sInfo = "软件说明：\r\n";

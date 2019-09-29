@@ -291,6 +291,7 @@
             this.Name = "frmMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "TFS Code Counter";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmMain_FormClosed);
             this.grpBox_SearchCondtion.ResumeLayout(false);
             this.grpBox_SearchCondtion.PerformLayout();
             this.splitContainer1.Panel1.ResumeLayout(false);
