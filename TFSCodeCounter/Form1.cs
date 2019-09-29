@@ -300,7 +300,7 @@ namespace TFSCodeCounter
             foreach (string dir in dirs)
             {
                 DirectoryInfo dirInfo = new DirectoryInfo(dir);
-                string cmd = string.Format("diffcount.exe \"{0}\\{1}\" \"{2}\\{1}\"", previous, dirInfo.Name, current);
+                string cmd = string.Format("\"{0}\\diffcount.exe\" \"{1}\\{2}\" \"{3}\\{2}\"", Application.StartupPath, previous, dirInfo.Name, current);
                 proc.StandardInput.WriteLine(cmd);
             }
 
