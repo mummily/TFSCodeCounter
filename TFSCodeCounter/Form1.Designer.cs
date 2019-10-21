@@ -31,7 +31,7 @@
             this.grpBox_SearchCondtion = new System.Windows.Forms.GroupBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.textBox_Commiter = new System.Windows.Forms.TextBox();
+            this.comboBox_Commiter = new System.Windows.Forms.ComboBox();
             this.dateTimePicker_To = new System.Windows.Forms.DateTimePicker();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -64,7 +64,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.grpBox_SearchCondtion.Controls.Add(this.label2);
             this.grpBox_SearchCondtion.Controls.Add(this.label1);
-            this.grpBox_SearchCondtion.Controls.Add(this.textBox_Commiter);
+            this.grpBox_SearchCondtion.Controls.Add(this.comboBox_Commiter);
             this.grpBox_SearchCondtion.Controls.Add(this.dateTimePicker_To);
             this.grpBox_SearchCondtion.Controls.Add(this.label4);
             this.grpBox_SearchCondtion.Controls.Add(this.label3);
@@ -89,30 +89,30 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(496, 28);
+            this.label1.Location = new System.Drawing.Point(505, 28);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(83, 12);
             this.label1.TabIndex = 10;
             this.label1.Text = "*默认全部用户";
             // 
-            // textBox_Commiter
+            // comboBox_Commiter
             // 
-            this.textBox_Commiter.Location = new System.Drawing.Point(390, 24);
-            this.textBox_Commiter.Name = "textBox_Commiter";
-            this.textBox_Commiter.Size = new System.Drawing.Size(100, 21);
-            this.textBox_Commiter.TabIndex = 9;
+            this.comboBox_Commiter.Location = new System.Drawing.Point(390, 24);
+            this.comboBox_Commiter.Name = "comboBox_Commiter";
+            this.comboBox_Commiter.Size = new System.Drawing.Size(111, 20);
+            this.comboBox_Commiter.TabIndex = 9;
             // 
             // dateTimePicker_To
             // 
-            this.dateTimePicker_To.Location = new System.Drawing.Point(186, 24);
+            this.dateTimePicker_To.Location = new System.Drawing.Point(196, 24);
             this.dateTimePicker_To.Name = "dateTimePicker_To";
-            this.dateTimePicker_To.Size = new System.Drawing.Size(104, 21);
+            this.dateTimePicker_To.Size = new System.Drawing.Size(111, 21);
             this.dateTimePicker_To.TabIndex = 8;
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(168, 28);
+            this.label4.Location = new System.Drawing.Point(177, 28);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(17, 12);
             this.label4.TabIndex = 7;
@@ -131,7 +131,7 @@
             // 
             this.dateTimePicker_From.Location = new System.Drawing.Point(61, 24);
             this.dateTimePicker_From.Name = "dateTimePicker_From";
-            this.dateTimePicker_From.Size = new System.Drawing.Size(104, 21);
+            this.dateTimePicker_From.Size = new System.Drawing.Size(111, 21);
             this.dateTimePicker_From.TabIndex = 5;
             // 
             // btnSearch
@@ -322,7 +322,7 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.DateTimePicker dateTimePicker_From;
-        private System.Windows.Forms.TextBox textBox_Commiter;
+        private System.Windows.Forms.ComboBox comboBox_Commiter;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.MenuStrip menuStrip1;

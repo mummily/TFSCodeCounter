@@ -8,6 +8,7 @@ using System.Text;
 using System.IO;
 using System.Diagnostics;
 using System.Windows.Forms;
+using System.Configuration;
 
 using Microsoft.TeamFoundation.VersionControl.Client;
 
@@ -23,6 +24,7 @@ namespace TFSCodeCounter
             currentPrj = teamPrj;
 
             InitializeComponent();
+            InitSetting();
             InitControl();
         }
 
@@ -47,6 +49,36 @@ namespace TFSCodeCounter
         }
 
         /// <summary>
+        /// 初始化应用设置
+        /// </summary>
+        private void InitSetting()
+        {
+            Configuration config = System.Configuration.ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            string sSetting = config.AppSettings.Settings["name"].Value;
+            if (sSetting.Trim() == "")
+            {
+                string sUser = currentPrj.VersionControlServer.AuthorizedUser;
+                int pos = sUser.LastIndexOf('\\');
+                if (pos > 0)
+                    sUser = sUser.Substring(pos + 1, sUser.Length - pos - 1);
+
+                comboBox_Commiter.Items.Add(""); // 空代表全部用户
+                comboBox_Commiter.Items.Add(sUser); // 当前用户
+            }
+            else
+            {
+                string[] sNames = sSetting.Split(',');
+                foreach (string sName in sNames)
+                {
+                    if (-1 == comboBox_Commiter.Items.IndexOf(sName))
+                    {
+                        comboBox_Commiter.Items.Add(sName);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
         /// 窗口关闭，删除缓存文件
         /// </summary>
         /// <param name="sender"></param>
@@ -58,6 +90,15 @@ namespace TFSCodeCounter
             {
                 if (Directory.Exists(current))
                     Directory.Delete(current, true);
+
+                Configuration config = System.Configuration.ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+                config.AppSettings.Settings.Remove("name");
+                foreach (object o in comboBox_Commiter.Items)
+                {
+                    string sUser = o.ToString();
+                    config.AppSettings.Settings.Add("name", sUser);
+                }
+                config.Save(ConfigurationSaveMode.Modified);
             }
             catch (System.Exception ex)
             {
@@ -91,13 +132,14 @@ namespace TFSCodeCounter
 
             try
             {
+                string queryUser = comboBox_Commiter.Text.Trim();
                 VersionControlServer vcs = currentPrj.VersionControlServer;
                 var changeSets = vcs.QueryHistory(
                       currentPrj.ServerItem, // @"$/AutoThink/DCS_AT"
                       VersionSpec.Latest,
                       0,
                       RecursionType.Full,
-                      textBox_Commiter.Text.Trim(),
+                      queryUser,
                       null,
                       null,
                       int.MaxValue,
@@ -129,6 +171,11 @@ namespace TFSCodeCounter
                     item.SubItems.Add(changeSet.CreationDate.ToString());
                     item.SubItems.Add(changeSet.Comment);
                     this.lstView_SearchResult.Items.Add(item);
+                }
+
+                if (-1 == comboBox_Commiter.Items.IndexOf(queryUser))
+                {
+                    comboBox_Commiter.Items.Add(queryUser);
                 }
             }
             catch (System.Exception ex)
