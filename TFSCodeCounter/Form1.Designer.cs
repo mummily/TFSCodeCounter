@@ -42,6 +42,7 @@
             this.textBox_Output = new System.Windows.Forms.RichTextBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btnShowOutput = new System.Windows.Forms.Button();
             this.checkBox_CheckAll = new System.Windows.Forms.CheckBox();
             this.checkBox_CheckAllNot = new System.Windows.Forms.CheckBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
@@ -208,6 +209,7 @@
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Controls.Add(this.btnShowOutput);
             this.groupBox1.Controls.Add(this.checkBox_CheckAll);
             this.groupBox1.Controls.Add(this.lstView_SearchResult);
             this.groupBox1.Controls.Add(this.checkBox_CheckAllNot);
@@ -218,6 +220,17 @@
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "变更集信息";
+            // 
+            // btnShowOutput
+            // 
+            this.btnShowOutput.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnShowOutput.Location = new System.Drawing.Point(10, 158);
+            this.btnShowOutput.Name = "btnShowOutput";
+            this.btnShowOutput.Size = new System.Drawing.Size(25, 23);
+            this.btnShowOutput.TabIndex = 5;
+            this.btnShowOutput.Text = "︾";
+            this.btnShowOutput.UseVisualStyleBackColor = true;
+            this.btnShowOutput.Click += new System.EventHandler(this.btnShowOutput_Click);
             // 
             // checkBox_CheckAll
             // 
@@ -330,6 +343,7 @@
         private System.Windows.Forms.ToolStripMenuItem MenuItem_About;
         private System.Windows.Forms.CheckBox checkBox_CheckAll;
         private System.Windows.Forms.CheckBox checkBox_CheckAllNot;
+        private System.Windows.Forms.Button btnShowOutput;
     }
 }
 

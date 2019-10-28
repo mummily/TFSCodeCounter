@@ -438,5 +438,11 @@ namespace TFSCodeCounter
             sInfo += "新增 修改 删除 新增+修改 空行 注释 非空非注释行 标准C折算率";
             MessageBox.Show(sInfo, "关于 TFS Code Counter");
         }
+
+        private void btnShowOutput_Click(object sender, EventArgs e)
+        {
+            splitContainer1.Panel2Collapsed = !splitContainer1.Panel2Collapsed;
+            btnShowOutput.Text = splitContainer1.Panel2Collapsed ? "︽" : "︾";
+        }
     }
 }
