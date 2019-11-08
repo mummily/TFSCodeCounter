@@ -26,8 +26,10 @@ namespace TFSCodeCounter
             InitializeComponent();
             InitSetting();
             InitControl();
-        }
 
+            // 初始化隐藏输出框
+            btnShowOutput_Click(null, null);
+        }
 
         /// <summary>
         /// 初始化界面控件
@@ -35,17 +37,20 @@ namespace TFSCodeCounter
         private void InitControl()
         {
             DateTime dtFrom = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1, 0, 0, 0);
-            dateTimePicker_From.Text = dtFrom.ToString();
-            dateTimePicker_To.Text = DateTime.Now.ToString();
+            dateTimePickerFrom.Text = dtFrom.ToString();
+            dateTimePickerTo.Text = DateTime.Now.ToString();
+
+            textBoxChangesetNum.Text = "100";
+            comboBoxUser.SelectedIndex = 0;
 
             //单选时,选择整行
-            this.lstView_SearchResult.FullRowSelect = true;
+            lstViewSearchResult.FullRowSelect = true;
 
-            this.lstView_SearchResult.Columns.Add("序号", 50, HorizontalAlignment.Left);
-            this.lstView_SearchResult.Columns.Add("变更集", 60, HorizontalAlignment.Left);
-            this.lstView_SearchResult.Columns.Add("用户", 120, HorizontalAlignment.Left);
-            this.lstView_SearchResult.Columns.Add("日期", 150, HorizontalAlignment.Left);
-            this.lstView_SearchResult.Columns.Add("注释", 600, HorizontalAlignment.Left);
+            this.lstViewSearchResult.Columns.Add("序号", 50, HorizontalAlignment.Left);
+            this.lstViewSearchResult.Columns.Add("变更集", 60, HorizontalAlignment.Left);
+            this.lstViewSearchResult.Columns.Add("用户", 120, HorizontalAlignment.Left);
+            this.lstViewSearchResult.Columns.Add("日期", 150, HorizontalAlignment.Left);
+            this.lstViewSearchResult.Columns.Add("注释", 600, HorizontalAlignment.Left);
         }
 
         /// <summary>
@@ -62,17 +67,16 @@ namespace TFSCodeCounter
                 if (pos > 0)
                     sUser = sUser.Substring(pos + 1, sUser.Length - pos - 1);
 
-                comboBox_Commiter.Items.Add(""); // 空代表全部用户
-                comboBox_Commiter.Items.Add(sUser); // 当前用户
+                comboBoxUser.Items.Add(sUser); // 当前用户
             }
             else
             {
                 string[] sNames = sSetting.Split(',');
                 foreach (string sName in sNames)
                 {
-                    if (-1 == comboBox_Commiter.Items.IndexOf(sName))
+                    if (-1 == comboBoxUser.Items.IndexOf(sName) && "" != sName.Trim())
                     {
-                        comboBox_Commiter.Items.Add(sName);
+                        comboBoxUser.Items.Add(sName);
                     }
                 }
             }
@@ -93,7 +97,7 @@ namespace TFSCodeCounter
 
                 Configuration config = System.Configuration.ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
                 config.AppSettings.Settings.Remove("name");
-                foreach (object o in comboBox_Commiter.Items)
+                foreach (object o in comboBoxUser.Items)
                 {
                     string sUser = o.ToString();
                     config.AppSettings.Settings.Add("name", sUser);
@@ -124,15 +128,17 @@ namespace TFSCodeCounter
         /// <param name="e"></param>
         private void btnSearch_Click(object sender, EventArgs e)
         {
-            lstView_SearchResult.Items.Clear();
-            checkBox_CheckAllNot.Checked = true;
+            lstViewSearchResult.Items.Clear();
+            checkBoxCheckAllNot.Checked = true;
 
-            DateTime dtFrom = new DateTime(dateTimePicker_From.Value.Year, dateTimePicker_From.Value.Month, dateTimePicker_From.Value.Day, 0, 0, 0);
-            DateTime dtTo = new DateTime(dateTimePicker_To.Value.Year, dateTimePicker_To.Value.Month, dateTimePicker_To.Value.Day, 23, 59, 59);
+            DateTime dtFrom = new DateTime(dateTimePickerFrom.Value.Year, dateTimePickerFrom.Value.Month, dateTimePickerFrom.Value.Day, 0, 0, 0);
+            DateTime dtTo = new DateTime(dateTimePickerTo.Value.Year, dateTimePickerTo.Value.Month, dateTimePickerTo.Value.Day, 23, 59, 59);
 
             try
             {
-                string queryUser = comboBox_Commiter.Text.Trim();
+                int maxCount = checkBoxChangesetNum.Checked ? int.Parse(textBoxChangesetNum.Text) : int.MaxValue;
+                string queryUser = checkBoxUser.Checked ? comboBoxUser.Text.Trim() : "";
+
                 VersionControlServer vcs = currentPrj.VersionControlServer;
                 var changeSets = vcs.QueryHistory(
                       currentPrj.ServerItem, // @"$/AutoThink/DCS_AT"
@@ -142,21 +148,24 @@ namespace TFSCodeCounter
                       queryUser,
                       null,
                       null,
-                      int.MaxValue,
-                      true,
+                      maxCount,
+                      false,
                       false).Cast<Changeset>();
 
                 int nIndex = 1;
 
                 foreach (Changeset changeSet in changeSets)
                 {
-                    DateTime dtCreationDate = changeSet.CreationDate;
+                    if (checkBoxDate.Checked)
+                    {
+                        DateTime dtCreationDate = changeSet.CreationDate;
 
-                    if (dtCreationDate.CompareTo(dtTo) > 0)
-                        continue;
+                        if (dtCreationDate.CompareTo(dtTo) > 0)
+                            continue;
 
-                    if (dtCreationDate.CompareTo(dtFrom) < 0)
-                        break;
+                        if (dtCreationDate.CompareTo(dtFrom) < 0)
+                            break;
+                    }
 
                     string commiter = changeSet.Committer;
                     int pos = commiter.LastIndexOf('\\');
@@ -170,12 +179,12 @@ namespace TFSCodeCounter
                     item.SubItems.Add(commiter);
                     item.SubItems.Add(changeSet.CreationDate.ToString());
                     item.SubItems.Add(changeSet.Comment);
-                    this.lstView_SearchResult.Items.Add(item);
+                    this.lstViewSearchResult.Items.Add(item);
                 }
 
-                if (-1 == comboBox_Commiter.Items.IndexOf(queryUser))
+                if (-1 == comboBoxUser.Items.IndexOf(queryUser) && "" != queryUser.Trim())
                 {
-                    comboBox_Commiter.Items.Add(queryUser);
+                    comboBoxUser.Items.Add(queryUser);
                 }
             }
             catch (System.Exception ex)
@@ -191,13 +200,18 @@ namespace TFSCodeCounter
         /// <param name="e"></param>
         private void btnCounter_Click(object sender, EventArgs e)
         {
-            if (lstView_SearchResult.CheckedItems.Count < 1)
+            if (splitContainer1.Panel2Collapsed)
             {
-                textBox_Output.Text = "请选择要统计的变更集信息...";
+                btnShowOutput.PerformClick();
+            }
+
+            if (lstViewSearchResult.CheckedItems.Count < 1)
+            {
+                textBoxOutput.Text = "请选择要统计的变更集信息...";
                 return;
             }
 
-            textBox_Output.Clear();
+            textBoxOutput.Clear();
 
             string current = Application.StartupPath + @"\current";
             if (Directory.Exists(current))
@@ -211,7 +225,7 @@ namespace TFSCodeCounter
             Directory.CreateDirectory(previous);
             File.SetAttributes(previous, FileAttributes.Hidden);
 
-            var items = lstView_SearchResult.CheckedItems;
+            var items = lstViewSearchResult.CheckedItems;
             int index = 1;
             foreach (ListViewItem item in items)
             {
@@ -219,12 +233,12 @@ namespace TFSCodeCounter
 
                 string outputInfo = "";
                 outputInfo = string.Format("{0}正在获取变更集信息：{1}（{2}/{3}）", ((index == 1) ? "" : "\r\n"), changsetID, index++, items.Count);
-                textBox_Output.Text += outputInfo;
+                textBoxOutput.Text += outputInfo;
 
                 downloadFiles(current, previous, changsetID);
             }
 
-            textBox_Output.Clear();
+            textBoxOutput.Clear();
 
             diffCount(current, previous);
         }
@@ -391,7 +405,7 @@ namespace TFSCodeCounter
             }
 
             sOutput = sOutput.Replace("\r\n\r\n\r\n\r\n", "\r\n\r\n");
-            textBox_Output.Text = sOutput;
+            textBoxOutput.Text = sOutput;
 
             proc.Close();
         }
@@ -403,8 +417,8 @@ namespace TFSCodeCounter
         /// <param name="e"></param>
         private void checkBox_CheckAll_Click(object sender, EventArgs e)
         {
-            checkBox_CheckAllNot.Checked = false;
-            foreach (ListViewItem item in lstView_SearchResult.Items)
+            checkBoxCheckAllNot.Checked = false;
+            foreach (ListViewItem item in lstViewSearchResult.Items)
             {
                 item.Checked = true;
             }
@@ -417,8 +431,8 @@ namespace TFSCodeCounter
         /// <param name="e"></param>
         private void checkBox_CheckAllNot_Click(object sender, EventArgs e)
         {
-            checkBox_CheckAll.Checked = false;
-            foreach (ListViewItem item in lstView_SearchResult.Items)
+            checkBoxCheckAll.Checked = false;
+            foreach (ListViewItem item in lstViewSearchResult.Items)
             {
                 item.Checked = false;
             }
@@ -439,10 +453,69 @@ namespace TFSCodeCounter
             MessageBox.Show(sInfo, "关于 TFS Code Counter");
         }
 
+        /// <summary>
+        /// 显示输出区按钮点击事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnShowOutput_Click(object sender, EventArgs e)
         {
             splitContainer1.Panel2Collapsed = !splitContainer1.Panel2Collapsed;
             btnShowOutput.Text = splitContainer1.Panel2Collapsed ? "︽" : "︾";
+        }
+
+        /// <summary>
+        /// 变更集数量输入验证
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void textBoxChangesetNum_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            // 默认不让输入
+            e.Handled = true;
+
+            // 退格符、数字可输入
+            if ('\b' == e.KeyChar || char.IsDigit(e.KeyChar))
+            {
+                e.Handled = false;
+            }
+
+            // 0 不能作为起始输入
+            if (textBoxChangesetNum.SelectionStart == 0 && e.KeyChar == '0')
+            {
+                e.Handled = true;
+            }
+        }
+
+        /// <summary>
+        /// 变更集数量选择态改变
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void checkBoxChangesetNum_CheckedChanged(object sender, EventArgs e)
+        {
+            textBoxChangesetNum.Enabled = checkBoxChangesetNum.Checked;
+        }
+
+        /// <summary>
+        /// 日期选择态改变
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void checkBoxDate_CheckedChanged(object sender, EventArgs e)
+        {
+            dateTimePickerFrom.Enabled = checkBoxDate.Checked;
+            dateTimePickerTo.Enabled = checkBoxDate.Checked;
+        }
+
+        /// <summary>
+        /// 用户选择态改变
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void checkBoxUser_CheckedChanged(object sender, EventArgs e)
+        {
+            comboBoxUser.Enabled = checkBoxUser.Checked;
         }
     }
 }

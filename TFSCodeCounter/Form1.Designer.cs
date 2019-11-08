@@ -28,28 +28,29 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.grpBox_SearchCondtion = new System.Windows.Forms.GroupBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.comboBox_Commiter = new System.Windows.Forms.ComboBox();
-            this.dateTimePicker_To = new System.Windows.Forms.DateTimePicker();
+            this.grpBoxSearchCondtion = new System.Windows.Forms.GroupBox();
+            this.textBoxChangesetNum = new System.Windows.Forms.TextBox();
+            this.checkBoxChangesetNum = new System.Windows.Forms.CheckBox();
+            this.checkBoxDate = new System.Windows.Forms.CheckBox();
+            this.checkBoxUser = new System.Windows.Forms.CheckBox();
+            this.comboBoxUser = new System.Windows.Forms.ComboBox();
+            this.dateTimePickerTo = new System.Windows.Forms.DateTimePicker();
             this.label4 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.dateTimePicker_From = new System.Windows.Forms.DateTimePicker();
+            this.dateTimePickerFrom = new System.Windows.Forms.DateTimePicker();
             this.btnSearch = new System.Windows.Forms.Button();
-            this.lstView_SearchResult = new System.Windows.Forms.ListView();
+            this.lstViewSearchResult = new System.Windows.Forms.ListView();
             this.btnCounter = new System.Windows.Forms.Button();
-            this.textBox_Output = new System.Windows.Forms.RichTextBox();
+            this.textBoxOutput = new System.Windows.Forms.RichTextBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.btnShowOutput = new System.Windows.Forms.Button();
-            this.checkBox_CheckAll = new System.Windows.Forms.CheckBox();
-            this.checkBox_CheckAllNot = new System.Windows.Forms.CheckBox();
+            this.checkBoxCheckAll = new System.Windows.Forms.CheckBox();
+            this.checkBoxCheckAllNot = new System.Windows.Forms.CheckBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.MenuItem_Help = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuItem_About = new System.Windows.Forms.ToolStripMenuItem();
-            this.grpBox_SearchCondtion.SuspendLayout();
+            this.grpBoxSearchCondtion.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -59,86 +60,106 @@
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // grpBox_SearchCondtion
+            // grpBoxSearchCondtion
             // 
-            this.grpBox_SearchCondtion.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.grpBoxSearchCondtion.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.grpBox_SearchCondtion.Controls.Add(this.label2);
-            this.grpBox_SearchCondtion.Controls.Add(this.label1);
-            this.grpBox_SearchCondtion.Controls.Add(this.comboBox_Commiter);
-            this.grpBox_SearchCondtion.Controls.Add(this.dateTimePicker_To);
-            this.grpBox_SearchCondtion.Controls.Add(this.label4);
-            this.grpBox_SearchCondtion.Controls.Add(this.label3);
-            this.grpBox_SearchCondtion.Controls.Add(this.dateTimePicker_From);
-            this.grpBox_SearchCondtion.Controls.Add(this.btnSearch);
-            this.grpBox_SearchCondtion.Location = new System.Drawing.Point(10, 27);
-            this.grpBox_SearchCondtion.Name = "grpBox_SearchCondtion";
-            this.grpBox_SearchCondtion.Size = new System.Drawing.Size(1038, 61);
-            this.grpBox_SearchCondtion.TabIndex = 0;
-            this.grpBox_SearchCondtion.TabStop = false;
-            this.grpBox_SearchCondtion.Text = "检索条件";
+            this.grpBoxSearchCondtion.Controls.Add(this.textBoxChangesetNum);
+            this.grpBoxSearchCondtion.Controls.Add(this.checkBoxChangesetNum);
+            this.grpBoxSearchCondtion.Controls.Add(this.checkBoxDate);
+            this.grpBoxSearchCondtion.Controls.Add(this.checkBoxUser);
+            this.grpBoxSearchCondtion.Controls.Add(this.comboBoxUser);
+            this.grpBoxSearchCondtion.Controls.Add(this.dateTimePickerTo);
+            this.grpBoxSearchCondtion.Controls.Add(this.label4);
+            this.grpBoxSearchCondtion.Controls.Add(this.dateTimePickerFrom);
+            this.grpBoxSearchCondtion.Controls.Add(this.btnSearch);
+            this.grpBoxSearchCondtion.Location = new System.Drawing.Point(10, 27);
+            this.grpBoxSearchCondtion.Name = "grpBoxSearchCondtion";
+            this.grpBoxSearchCondtion.Size = new System.Drawing.Size(1038, 61);
+            this.grpBoxSearchCondtion.TabIndex = 0;
+            this.grpBoxSearchCondtion.TabStop = false;
+            this.grpBoxSearchCondtion.Text = "检索条件";
             // 
-            // label2
+            // textBoxChangesetNum
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(358, 28);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(29, 12);
-            this.label2.TabIndex = 11;
-            this.label2.Text = "用户";
+            this.textBoxChangesetNum.Location = new System.Drawing.Point(685, 26);
+            this.textBoxChangesetNum.Name = "textBoxChangesetNum";
+            this.textBoxChangesetNum.Size = new System.Drawing.Size(65, 21);
+            this.textBoxChangesetNum.TabIndex = 14;
+            this.textBoxChangesetNum.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxChangesetNum_KeyPress);
             // 
-            // label1
+            // checkBoxChangesetNum
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(505, 28);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(83, 12);
-            this.label1.TabIndex = 10;
-            this.label1.Text = "*默认全部用户";
+            this.checkBoxChangesetNum.AutoSize = true;
+            this.checkBoxChangesetNum.Checked = true;
+            this.checkBoxChangesetNum.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxChangesetNum.Location = new System.Drawing.Point(609, 28);
+            this.checkBoxChangesetNum.Name = "checkBoxChangesetNum";
+            this.checkBoxChangesetNum.Size = new System.Drawing.Size(78, 16);
+            this.checkBoxChangesetNum.TabIndex = 13;
+            this.checkBoxChangesetNum.Text = "变更集数:";
+            this.checkBoxChangesetNum.UseVisualStyleBackColor = true;
+            this.checkBoxChangesetNum.CheckedChanged += new System.EventHandler(this.checkBoxChangesetNum_CheckedChanged);
             // 
-            // comboBox_Commiter
+            // checkBoxDate
             // 
-            this.comboBox_Commiter.Location = new System.Drawing.Point(390, 24);
-            this.comboBox_Commiter.Name = "comboBox_Commiter";
-            this.comboBox_Commiter.Size = new System.Drawing.Size(111, 20);
-            this.comboBox_Commiter.TabIndex = 9;
+            this.checkBoxDate.AutoSize = true;
+            this.checkBoxDate.Checked = true;
+            this.checkBoxDate.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxDate.Location = new System.Drawing.Point(17, 28);
+            this.checkBoxDate.Name = "checkBoxDate";
+            this.checkBoxDate.Size = new System.Drawing.Size(66, 16);
+            this.checkBoxDate.TabIndex = 12;
+            this.checkBoxDate.Text = "日期从:";
+            this.checkBoxDate.UseVisualStyleBackColor = true;
+            this.checkBoxDate.CheckedChanged += new System.EventHandler(this.checkBoxDate_CheckedChanged);
             // 
-            // dateTimePicker_To
+            // checkBoxUser
             // 
-            this.dateTimePicker_To.Location = new System.Drawing.Point(196, 24);
-            this.dateTimePicker_To.Name = "dateTimePicker_To";
-            this.dateTimePicker_To.Size = new System.Drawing.Size(111, 21);
-            this.dateTimePicker_To.TabIndex = 8;
+            this.checkBoxUser.AutoSize = true;
+            this.checkBoxUser.Checked = true;
+            this.checkBoxUser.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxUser.Location = new System.Drawing.Point(382, 28);
+            this.checkBoxUser.Name = "checkBoxUser";
+            this.checkBoxUser.Size = new System.Drawing.Size(54, 16);
+            this.checkBoxUser.TabIndex = 11;
+            this.checkBoxUser.Text = "用户:";
+            this.checkBoxUser.CheckedChanged += new System.EventHandler(this.checkBoxUser_CheckedChanged);
+            // 
+            // comboBoxUser
+            // 
+            this.comboBoxUser.Location = new System.Drawing.Point(436, 26);
+            this.comboBoxUser.Name = "comboBoxUser";
+            this.comboBoxUser.Size = new System.Drawing.Size(111, 20);
+            this.comboBoxUser.TabIndex = 9;
+            // 
+            // dateTimePickerTo
+            // 
+            this.dateTimePickerTo.Location = new System.Drawing.Point(210, 26);
+            this.dateTimePickerTo.Name = "dateTimePickerTo";
+            this.dateTimePickerTo.Size = new System.Drawing.Size(111, 21);
+            this.dateTimePickerTo.TabIndex = 8;
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(177, 28);
+            this.label4.Location = new System.Drawing.Point(195, 30);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(17, 12);
             this.label4.TabIndex = 7;
             this.label4.Text = "～";
             // 
-            // label3
+            // dateTimePickerFrom
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(17, 28);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(41, 12);
-            this.label3.TabIndex = 6;
-            this.label3.Text = "日期从";
-            // 
-            // dateTimePicker_From
-            // 
-            this.dateTimePicker_From.Location = new System.Drawing.Point(61, 24);
-            this.dateTimePicker_From.Name = "dateTimePicker_From";
-            this.dateTimePicker_From.Size = new System.Drawing.Size(111, 21);
-            this.dateTimePicker_From.TabIndex = 5;
+            this.dateTimePickerFrom.Location = new System.Drawing.Point(83, 26);
+            this.dateTimePickerFrom.Name = "dateTimePickerFrom";
+            this.dateTimePickerFrom.Size = new System.Drawing.Size(111, 21);
+            this.dateTimePickerFrom.TabIndex = 5;
             // 
             // btnSearch
             // 
             this.btnSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSearch.Location = new System.Drawing.Point(943, 23);
+            this.btnSearch.Location = new System.Drawing.Point(943, 25);
             this.btnSearch.Margin = new System.Windows.Forms.Padding(11, 3, 3, 3);
             this.btnSearch.Name = "btnSearch";
             this.btnSearch.Size = new System.Drawing.Size(75, 23);
@@ -147,18 +168,18 @@
             this.btnSearch.UseVisualStyleBackColor = true;
             this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
             // 
-            // lstView_SearchResult
+            // lstViewSearchResult
             // 
-            this.lstView_SearchResult.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.lstViewSearchResult.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.lstView_SearchResult.CheckBoxes = true;
-            this.lstView_SearchResult.Location = new System.Drawing.Point(10, 48);
-            this.lstView_SearchResult.Name = "lstView_SearchResult";
-            this.lstView_SearchResult.Size = new System.Drawing.Size(1022, 104);
-            this.lstView_SearchResult.TabIndex = 1;
-            this.lstView_SearchResult.UseCompatibleStateImageBehavior = false;
-            this.lstView_SearchResult.View = System.Windows.Forms.View.Details;
+            this.lstViewSearchResult.CheckBoxes = true;
+            this.lstViewSearchResult.Location = new System.Drawing.Point(10, 48);
+            this.lstViewSearchResult.Name = "lstViewSearchResult";
+            this.lstViewSearchResult.Size = new System.Drawing.Size(1022, 104);
+            this.lstViewSearchResult.TabIndex = 1;
+            this.lstViewSearchResult.UseCompatibleStateImageBehavior = false;
+            this.lstViewSearchResult.View = System.Windows.Forms.View.Details;
             // 
             // btnCounter
             // 
@@ -171,18 +192,18 @@
             this.btnCounter.UseVisualStyleBackColor = true;
             this.btnCounter.Click += new System.EventHandler(this.btnCounter_Click);
             // 
-            // textBox_Output
+            // textBoxOutput
             // 
-            this.textBox_Output.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.textBoxOutput.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox_Output.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textBox_Output.Location = new System.Drawing.Point(10, 20);
-            this.textBox_Output.Name = "textBox_Output";
-            this.textBox_Output.ReadOnly = true;
-            this.textBox_Output.Size = new System.Drawing.Size(1022, 158);
-            this.textBox_Output.TabIndex = 6;
-            this.textBox_Output.Text = "";
+            this.textBoxOutput.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBoxOutput.Location = new System.Drawing.Point(10, 20);
+            this.textBoxOutput.Name = "textBoxOutput";
+            this.textBoxOutput.ReadOnly = true;
+            this.textBoxOutput.Size = new System.Drawing.Size(1022, 158);
+            this.textBoxOutput.TabIndex = 6;
+            this.textBoxOutput.Text = "";
             // 
             // splitContainer1
             // 
@@ -210,9 +231,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.Controls.Add(this.btnShowOutput);
-            this.groupBox1.Controls.Add(this.checkBox_CheckAll);
-            this.groupBox1.Controls.Add(this.lstView_SearchResult);
-            this.groupBox1.Controls.Add(this.checkBox_CheckAllNot);
+            this.groupBox1.Controls.Add(this.checkBoxCheckAll);
+            this.groupBox1.Controls.Add(this.lstViewSearchResult);
+            this.groupBox1.Controls.Add(this.checkBoxCheckAllNot);
             this.groupBox1.Controls.Add(this.btnCounter);
             this.groupBox1.Location = new System.Drawing.Point(10, 3);
             this.groupBox1.Name = "groupBox1";
@@ -232,34 +253,34 @@
             this.btnShowOutput.UseVisualStyleBackColor = true;
             this.btnShowOutput.Click += new System.EventHandler(this.btnShowOutput_Click);
             // 
-            // checkBox_CheckAll
+            // checkBoxCheckAll
             // 
-            this.checkBox_CheckAll.AutoSize = true;
-            this.checkBox_CheckAll.Location = new System.Drawing.Point(17, 26);
-            this.checkBox_CheckAll.Name = "checkBox_CheckAll";
-            this.checkBox_CheckAll.Size = new System.Drawing.Size(48, 16);
-            this.checkBox_CheckAll.TabIndex = 3;
-            this.checkBox_CheckAll.Text = "全选";
-            this.checkBox_CheckAll.UseVisualStyleBackColor = true;
-            this.checkBox_CheckAll.Click += new System.EventHandler(this.checkBox_CheckAll_Click);
+            this.checkBoxCheckAll.AutoSize = true;
+            this.checkBoxCheckAll.Location = new System.Drawing.Point(17, 26);
+            this.checkBoxCheckAll.Name = "checkBoxCheckAll";
+            this.checkBoxCheckAll.Size = new System.Drawing.Size(48, 16);
+            this.checkBoxCheckAll.TabIndex = 3;
+            this.checkBoxCheckAll.Text = "全选";
+            this.checkBoxCheckAll.UseVisualStyleBackColor = true;
+            this.checkBoxCheckAll.Click += new System.EventHandler(this.checkBox_CheckAll_Click);
             // 
-            // checkBox_CheckAllNot
+            // checkBoxCheckAllNot
             // 
-            this.checkBox_CheckAllNot.AutoSize = true;
-            this.checkBox_CheckAllNot.Location = new System.Drawing.Point(72, 26);
-            this.checkBox_CheckAllNot.Name = "checkBox_CheckAllNot";
-            this.checkBox_CheckAllNot.Size = new System.Drawing.Size(60, 16);
-            this.checkBox_CheckAllNot.TabIndex = 4;
-            this.checkBox_CheckAllNot.Text = "全不选";
-            this.checkBox_CheckAllNot.UseVisualStyleBackColor = true;
-            this.checkBox_CheckAllNot.Click += new System.EventHandler(this.checkBox_CheckAllNot_Click);
+            this.checkBoxCheckAllNot.AutoSize = true;
+            this.checkBoxCheckAllNot.Location = new System.Drawing.Point(72, 26);
+            this.checkBoxCheckAllNot.Name = "checkBoxCheckAllNot";
+            this.checkBoxCheckAllNot.Size = new System.Drawing.Size(60, 16);
+            this.checkBoxCheckAllNot.TabIndex = 4;
+            this.checkBoxCheckAllNot.Text = "全不选";
+            this.checkBoxCheckAllNot.UseVisualStyleBackColor = true;
+            this.checkBoxCheckAllNot.Click += new System.EventHandler(this.checkBox_CheckAllNot_Click);
             // 
             // groupBox2
             // 
             this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox2.Controls.Add(this.textBox_Output);
+            this.groupBox2.Controls.Add(this.textBoxOutput);
             this.groupBox2.Location = new System.Drawing.Point(10, 3);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(1038, 183);
@@ -299,14 +320,14 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1057, 481);
             this.Controls.Add(this.splitContainer1);
-            this.Controls.Add(this.grpBox_SearchCondtion);
+            this.Controls.Add(this.grpBoxSearchCondtion);
             this.Controls.Add(this.menuStrip1);
             this.Name = "frmMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "TFS Code Counter";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmMain_FormClosed);
-            this.grpBox_SearchCondtion.ResumeLayout(false);
-            this.grpBox_SearchCondtion.PerformLayout();
+            this.grpBoxSearchCondtion.ResumeLayout(false);
+            this.grpBoxSearchCondtion.PerformLayout();
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
@@ -323,27 +344,28 @@
 
         #endregion
 
-        private System.Windows.Forms.GroupBox grpBox_SearchCondtion;
-        private System.Windows.Forms.ListView lstView_SearchResult;
+        private System.Windows.Forms.GroupBox grpBoxSearchCondtion;
+        private System.Windows.Forms.ListView lstViewSearchResult;
         private System.Windows.Forms.Button btnSearch;
         private System.Windows.Forms.Button btnCounter;
-        private System.Windows.Forms.RichTextBox textBox_Output;
+        private System.Windows.Forms.RichTextBox textBoxOutput;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.DateTimePicker dateTimePicker_To;
+        private System.Windows.Forms.DateTimePicker dateTimePickerTo;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.DateTimePicker dateTimePicker_From;
-        private System.Windows.Forms.ComboBox comboBox_Commiter;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.DateTimePicker dateTimePickerFrom;
+        private System.Windows.Forms.ComboBox comboBoxUser;
+        private System.Windows.Forms.CheckBox checkBoxUser;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem MenuItem_Help;
         private System.Windows.Forms.ToolStripMenuItem MenuItem_About;
-        private System.Windows.Forms.CheckBox checkBox_CheckAll;
-        private System.Windows.Forms.CheckBox checkBox_CheckAllNot;
+        private System.Windows.Forms.CheckBox checkBoxCheckAll;
+        private System.Windows.Forms.CheckBox checkBoxCheckAllNot;
         private System.Windows.Forms.Button btnShowOutput;
+        private System.Windows.Forms.CheckBox checkBoxDate;
+        private System.Windows.Forms.CheckBox checkBoxChangesetNum;
+        private System.Windows.Forms.TextBox textBoxChangesetNum;
     }
 }
 
