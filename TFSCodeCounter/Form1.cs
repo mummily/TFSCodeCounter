@@ -24,11 +24,7 @@ namespace TFSCodeCounter
             currentPrj = teamPrj;
 
             InitializeComponent();
-            InitSetting();
             InitControl();
-
-            // 初始化隐藏输出框
-            btnShowOutput_Click(null, null);
         }
 
         /// <summary>
@@ -36,14 +32,6 @@ namespace TFSCodeCounter
         /// </summary>
         private void InitControl()
         {
-            DateTime dtFrom = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1, 0, 0, 0);
-            dateTimePickerFrom.Text = dtFrom.ToString();
-            dateTimePickerTo.Text = DateTime.Now.ToString();
-
-            textBoxChangesetNum.Text = "100";
-            comboBoxUser.SelectedIndex = 0;
-
-            //单选时,选择整行
             lstViewSearchResult.FullRowSelect = true;
 
             this.lstViewSearchResult.Columns.Add("序号", 50, HorizontalAlignment.Left);
@@ -51,35 +39,6 @@ namespace TFSCodeCounter
             this.lstViewSearchResult.Columns.Add("用户", 120, HorizontalAlignment.Left);
             this.lstViewSearchResult.Columns.Add("日期", 150, HorizontalAlignment.Left);
             this.lstViewSearchResult.Columns.Add("注释", 600, HorizontalAlignment.Left);
-        }
-
-        /// <summary>
-        /// 初始化应用设置
-        /// </summary>
-        private void InitSetting()
-        {
-            Configuration config = System.Configuration.ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-            string sSetting = config.AppSettings.Settings["name"].Value;
-            if (sSetting.Trim() == "")
-            {
-                string sUser = currentPrj.VersionControlServer.AuthorizedUser;
-                int pos = sUser.LastIndexOf('\\');
-                if (pos > 0)
-                    sUser = sUser.Substring(pos + 1, sUser.Length - pos - 1);
-
-                comboBoxUser.Items.Add(sUser); // 当前用户
-            }
-            else
-            {
-                string[] sNames = sSetting.Split(',');
-                foreach (string sName in sNames)
-                {
-                    if (-1 == comboBoxUser.Items.IndexOf(sName) && "" != sName.Trim())
-                    {
-                        comboBoxUser.Items.Add(sName);
-                    }
-                }
-            }
         }
 
         /// <summary>
@@ -94,15 +53,6 @@ namespace TFSCodeCounter
             {
                 if (Directory.Exists(current))
                     Directory.Delete(current, true);
-
-                Configuration config = System.Configuration.ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-                config.AppSettings.Settings.Remove("name");
-                foreach (object o in comboBoxUser.Items)
-                {
-                    string sUser = o.ToString();
-                    config.AppSettings.Settings.Add("name", sUser);
-                }
-                config.Save(ConfigurationSaveMode.Modified);
             }
             catch (System.Exception ex)
             {
@@ -119,6 +69,33 @@ namespace TFSCodeCounter
             {
                 MessageBox.Show(previous + "\r\n" + ex.Message, this.Text);
             }
+
+            Configuration config = System.Configuration.ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+
+            // 用户
+            config.AppSettings.Settings.Remove("user.name");
+            foreach (object o in comboBoxUser.Items)
+            {
+                string sUser = o.ToString();
+                config.AppSettings.Settings.Add("user.name", sUser);
+            }
+
+            // 变更集数
+            config.AppSettings.Settings.Remove("changeset.number");
+            config.AppSettings.Settings.Add("changeset.number", textBoxChangesetNum.Text);
+
+            config.AppSettings.Settings.Remove("user.checked");
+            config.AppSettings.Settings.Add("user.checked", checkBoxUser.Checked.ToString());
+            config.AppSettings.Settings.Remove("datetime.checked");
+            config.AppSettings.Settings.Add("datetime.checked", checkBoxDate.Checked.ToString());
+            config.AppSettings.Settings.Remove("changeset.checked");
+            config.AppSettings.Settings.Add("changeset.checked", checkBoxChangesetNum.Checked.ToString());
+
+            // 输出区是否显示
+            config.AppSettings.Settings.Remove("output.show");
+            config.AppSettings.Settings.Add("output.show", (!splitContainer1.Panel2Collapsed).ToString());
+
+            config.Save(ConfigurationSaveMode.Modified);
         }
 
         /// <summary>
@@ -516,6 +493,82 @@ namespace TFSCodeCounter
         private void checkBoxUser_CheckedChanged(object sender, EventArgs e)
         {
             comboBoxUser.Enabled = checkBoxUser.Checked;
+        }
+
+        /// <summary>
+        /// 初始化应用设置
+        /// </summary>
+        private void InitSetting()
+        {
+            Configuration config = System.Configuration.ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+
+            // 查询用户 user.name
+            string sUserName = config.AppSettings.Settings["user.name"].Value;
+            if (sUserName.Trim() == "")
+            {
+                string sUser = currentPrj.VersionControlServer.AuthorizedUser;
+                int pos = sUser.LastIndexOf('\\');
+                if (pos > 0)
+                    sUser = sUser.Substring(pos + 1, sUser.Length - pos - 1);
+
+                comboBoxUser.Items.Add(sUser); // 当前用户
+            }
+            else
+            {
+                string[] sNames = sUserName.Split(',');
+                foreach (string sName in sNames)
+                {
+                    if (-1 == comboBoxUser.Items.IndexOf(sName) && "" != sName.Trim())
+                    {
+                        comboBoxUser.Items.Add(sName);
+                    }
+                }
+            }
+
+            // 用户默认第一个
+            if (comboBoxUser.Items.Count > 0)
+                comboBoxUser.SelectedIndex = 0;
+
+            // 变更集数 changeset.number 默认最新10条
+            textBoxChangesetNum.Text = "10";
+            int nChangesetNum = 10;
+            if (int.TryParse(config.AppSettings.Settings["changeset.number"].Value.ToString(), out nChangesetNum))
+                textBoxChangesetNum.Text = config.AppSettings.Settings["changeset.number"].Value.ToString();
+
+            // 查询日期 datetime.checked
+            bool bChecked = true;
+            Boolean.TryParse(config.AppSettings.Settings["datetime.checked"].Value.ToString(), out bChecked);
+            checkBoxDate.Checked = bChecked;
+            // 查询用户 user.checked
+            bChecked = true;
+            Boolean.TryParse(config.AppSettings.Settings["user.checked"].Value.ToString(), out bChecked);
+            checkBoxUser.Checked = bChecked;
+            // 查询变更集数 changeset.checked
+            bChecked = true;
+            Boolean.TryParse(config.AppSettings.Settings["changeset.checked"].Value.ToString(), out bChecked);
+            checkBoxChangesetNum.Checked = bChecked;
+
+            // 是否显示输出区
+            bool bShow = false;
+            Boolean.TryParse(config.AppSettings.Settings["output.show"].Value.ToString(), out bShow);
+            if (!bShow)
+                btnShowOutput_Click(null, EventArgs.Empty);
+        }
+
+        /// <summary>
+        /// 加载
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void frmMain_Load(object sender, EventArgs e)
+        {
+            // 日期
+            DateTime dtFrom = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1, 0, 0, 0);
+            dateTimePickerFrom.Text = dtFrom.ToString();
+            dateTimePickerTo.Text = DateTime.Now.ToString();
+
+            // 初始化设置
+            InitSetting();
         }
     }
 }
