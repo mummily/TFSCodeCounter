@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             this.grpBoxSearchCondtion = new System.Windows.Forms.GroupBox();
+            this.comboBoxLocation = new System.Windows.Forms.ComboBox();
+            this.checkBoxLocation = new System.Windows.Forms.CheckBox();
             this.textBoxChangesetNum = new System.Windows.Forms.TextBox();
             this.checkBoxChangesetNum = new System.Windows.Forms.CheckBox();
             this.checkBoxDate = new System.Windows.Forms.CheckBox();
@@ -43,6 +45,7 @@
             this.textBoxOutput = new System.Windows.Forms.RichTextBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btnCounterAll = new System.Windows.Forms.Button();
             this.btnShowOutput = new System.Windows.Forms.Button();
             this.checkBoxCheckAll = new System.Windows.Forms.CheckBox();
             this.checkBoxCheckAllNot = new System.Windows.Forms.CheckBox();
@@ -50,8 +53,6 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.MenuItem_Help = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuItem_About = new System.Windows.Forms.ToolStripMenuItem();
-            this.checkBoxLocation = new System.Windows.Forms.CheckBox();
-            this.comboBoxLocation = new System.Windows.Forms.ComboBox();
             this.grpBoxSearchCondtion.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -83,6 +84,25 @@
             this.grpBoxSearchCondtion.TabIndex = 0;
             this.grpBoxSearchCondtion.TabStop = false;
             this.grpBoxSearchCondtion.Text = "检索条件";
+            // 
+            // comboBoxLocation
+            // 
+            this.comboBoxLocation.Location = new System.Drawing.Point(83, 18);
+            this.comboBoxLocation.Name = "comboBoxLocation";
+            this.comboBoxLocation.Size = new System.Drawing.Size(667, 20);
+            this.comboBoxLocation.TabIndex = 16;
+            // 
+            // checkBoxLocation
+            // 
+            this.checkBoxLocation.AutoSize = true;
+            this.checkBoxLocation.Checked = true;
+            this.checkBoxLocation.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxLocation.Location = new System.Drawing.Point(17, 20);
+            this.checkBoxLocation.Name = "checkBoxLocation";
+            this.checkBoxLocation.Size = new System.Drawing.Size(66, 16);
+            this.checkBoxLocation.TabIndex = 15;
+            this.checkBoxLocation.Text = "源位置:";
+            this.checkBoxLocation.CheckedChanged += new System.EventHandler(this.checkBoxLocation_CheckedChanged);
             // 
             // textBoxChangesetNum
             // 
@@ -192,7 +212,7 @@
             this.btnCounter.Name = "btnCounter";
             this.btnCounter.Size = new System.Drawing.Size(75, 23);
             this.btnCounter.TabIndex = 2;
-            this.btnCounter.Text = "统计";
+            this.btnCounter.Text = "单次统计";
             this.btnCounter.UseVisualStyleBackColor = true;
             this.btnCounter.Click += new System.EventHandler(this.btnCounter_Click);
             // 
@@ -234,6 +254,7 @@
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Controls.Add(this.btnCounterAll);
             this.groupBox1.Controls.Add(this.btnShowOutput);
             this.groupBox1.Controls.Add(this.checkBoxCheckAll);
             this.groupBox1.Controls.Add(this.lstViewSearchResult);
@@ -245,6 +266,17 @@
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "变更集信息";
+            // 
+            // btnCounterAll
+            // 
+            this.btnCounterAll.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnCounterAll.Location = new System.Drawing.Point(862, 186);
+            this.btnCounterAll.Name = "btnCounterAll";
+            this.btnCounterAll.Size = new System.Drawing.Size(75, 23);
+            this.btnCounterAll.TabIndex = 6;
+            this.btnCounterAll.Text = "整体统计";
+            this.btnCounterAll.UseVisualStyleBackColor = true;
+            this.btnCounterAll.Click += new System.EventHandler(this.btnCounterAll_Click);
             // 
             // btnShowOutput
             // 
@@ -317,25 +349,6 @@
             this.MenuItem_About.Text = "关于 TFS Code Counter(&A)";
             this.MenuItem_About.Click += new System.EventHandler(this.MenuItem_About_Click);
             // 
-            // checkBoxLocation
-            // 
-            this.checkBoxLocation.AutoSize = true;
-            this.checkBoxLocation.Checked = true;
-            this.checkBoxLocation.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxLocation.Location = new System.Drawing.Point(17, 20);
-            this.checkBoxLocation.Name = "checkBoxLocation";
-            this.checkBoxLocation.Size = new System.Drawing.Size(66, 16);
-            this.checkBoxLocation.TabIndex = 15;
-            this.checkBoxLocation.Text = "源位置:";
-            this.checkBoxLocation.CheckedChanged += new System.EventHandler(this.checkBoxLocation_CheckedChanged);
-            // 
-            // comboBoxLocation
-            // 
-            this.comboBoxLocation.Location = new System.Drawing.Point(83, 18);
-            this.comboBoxLocation.Name = "comboBoxLocation";
-            this.comboBoxLocation.Size = new System.Drawing.Size(667, 20);
-            this.comboBoxLocation.TabIndex = 16;
-            // 
             // frmMain
             // 
             this.AcceptButton = this.btnSearch;
@@ -392,6 +405,7 @@
         private System.Windows.Forms.TextBox textBoxChangesetNum;
         private System.Windows.Forms.CheckBox checkBoxLocation;
         private System.Windows.Forms.ComboBox comboBoxLocation;
+        private System.Windows.Forms.Button btnCounterAll;
     }
 }
 
