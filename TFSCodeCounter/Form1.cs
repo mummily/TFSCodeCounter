@@ -72,18 +72,27 @@ namespace TFSCodeCounter
 
             Configuration config = System.Configuration.ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
 
+            // 源位置
+            config.AppSettings.Settings.Remove("location.path");
+            foreach (object obj in comboBoxLocation.Items)
+            {
+                config.AppSettings.Settings.Add("location.path", obj.ToString());
+            }
+
             // 用户
             config.AppSettings.Settings.Remove("user.name");
-            foreach (object o in comboBoxUser.Items)
+            foreach (object obj in comboBoxUser.Items)
             {
-                string sUser = o.ToString();
-                config.AppSettings.Settings.Add("user.name", sUser);
+                config.AppSettings.Settings.Add("user.name", obj.ToString());
             }
 
             // 变更集数
             config.AppSettings.Settings.Remove("changeset.number");
             config.AppSettings.Settings.Add("changeset.number", textBoxChangesetNum.Text);
 
+            // CheckBox是否选中
+            config.AppSettings.Settings.Remove("location.checked");
+            config.AppSettings.Settings.Add("location.checked", checkBoxLocation.Checked.ToString());
             config.AppSettings.Settings.Remove("user.checked");
             config.AppSettings.Settings.Add("user.checked", checkBoxUser.Checked.ToString());
             config.AppSettings.Settings.Remove("datetime.checked");
@@ -107,6 +116,8 @@ namespace TFSCodeCounter
         {
             lstViewSearchResult.Items.Clear();
             checkBoxCheckAllNot.Checked = true;
+            if (checkBoxLocation.Checked && comboBoxLocation.Text.Trim() == "")
+                comboBoxLocation.SelectedIndex = 0;
 
             DateTime dtFrom = new DateTime(dateTimePickerFrom.Value.Year, dateTimePickerFrom.Value.Month, dateTimePickerFrom.Value.Day, 0, 0, 0);
             DateTime dtTo = new DateTime(dateTimePickerTo.Value.Year, dateTimePickerTo.Value.Month, dateTimePickerTo.Value.Day, 23, 59, 59);
@@ -115,10 +126,10 @@ namespace TFSCodeCounter
             {
                 int maxCount = checkBoxChangesetNum.Checked ? int.Parse(textBoxChangesetNum.Text) : int.MaxValue;
                 string queryUser = checkBoxUser.Checked ? comboBoxUser.Text.Trim() : "";
+                string path = checkBoxLocation.Checked ? comboBoxLocation.Text.Trim() : currentPrj.ServerItem;
 
                 VersionControlServer vcs = currentPrj.VersionControlServer;
-                var changeSets = vcs.QueryHistory(
-                      currentPrj.ServerItem, // @"$/AutoThink/DCS_AT"
+                var changeSets = vcs.QueryHistory(path,
                       VersionSpec.Latest,
                       0,
                       RecursionType.Full,
@@ -162,6 +173,11 @@ namespace TFSCodeCounter
                 if (-1 == comboBoxUser.Items.IndexOf(queryUser) && "" != queryUser.Trim())
                 {
                     comboBoxUser.Items.Add(queryUser);
+                }
+
+                if (changeSets.Count() > 0 && -1 == comboBoxLocation.Items.IndexOf(path))
+                {
+                    comboBoxLocation.Items.Add(path);
                 }
             }
             catch (System.Exception ex)
@@ -232,8 +248,7 @@ namespace TFSCodeCounter
             {
                 VersionControlServer vcs = currentPrj.VersionControlServer;
 
-                var changesetList = vcs.QueryHistory(
-                  currentPrj.ServerItem,
+                var changesetList = vcs.QueryHistory(currentPrj.ServerItem,
                   VersionSpec.Latest,
                   0,
                   RecursionType.Full,
@@ -496,11 +511,41 @@ namespace TFSCodeCounter
         }
 
         /// <summary>
+        /// 源位置改变
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void checkBoxLocation_CheckedChanged(object sender, EventArgs e)
+        {
+            comboBoxLocation.Enabled = checkBoxLocation.Checked;
+        }
+
+        /// <summary>
         /// 初始化应用设置
         /// </summary>
         private void InitSetting()
         {
             Configuration config = System.Configuration.ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+
+            // 源位置
+            string sLocation = config.AppSettings.Settings["location.path"].Value;
+            if (sLocation.Trim() == "")
+            {
+                comboBoxLocation.Items.Add(currentPrj.ServerItem);
+            }
+            else
+            {
+                string[] sPaths = sLocation.Split(',');
+                foreach (string sPath in sPaths)
+                {
+                    if (-1 == comboBoxLocation.Items.IndexOf(sPath) && "" != sPath.Trim())
+                    {
+                        comboBoxLocation.Items.Add(sPath);
+                    }
+                }
+            }
+            if (comboBoxLocation.Items.Count > 0)
+                comboBoxLocation.SelectedIndex = 0;
 
             // 查询用户 user.name
             string sUserName = config.AppSettings.Settings["user.name"].Value;
@@ -543,6 +588,10 @@ namespace TFSCodeCounter
             bChecked = true;
             Boolean.TryParse(config.AppSettings.Settings["user.checked"].Value.ToString(), out bChecked);
             checkBoxUser.Checked = bChecked;
+            // 查询源位置 location.checked
+            bChecked = true;
+            Boolean.TryParse(config.AppSettings.Settings["location.checked"].Value.ToString(), out bChecked);
+            checkBoxLocation.Checked = bChecked;
             // 查询变更集数 changeset.checked
             bChecked = true;
             Boolean.TryParse(config.AppSettings.Settings["changeset.checked"].Value.ToString(), out bChecked);

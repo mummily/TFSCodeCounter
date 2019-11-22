@@ -50,6 +50,8 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.MenuItem_Help = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuItem_About = new System.Windows.Forms.ToolStripMenuItem();
+            this.checkBoxLocation = new System.Windows.Forms.CheckBox();
+            this.comboBoxLocation = new System.Windows.Forms.ComboBox();
             this.grpBoxSearchCondtion.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -64,6 +66,8 @@
             // 
             this.grpBoxSearchCondtion.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.grpBoxSearchCondtion.Controls.Add(this.comboBoxLocation);
+            this.grpBoxSearchCondtion.Controls.Add(this.checkBoxLocation);
             this.grpBoxSearchCondtion.Controls.Add(this.textBoxChangesetNum);
             this.grpBoxSearchCondtion.Controls.Add(this.checkBoxChangesetNum);
             this.grpBoxSearchCondtion.Controls.Add(this.checkBoxDate);
@@ -75,14 +79,14 @@
             this.grpBoxSearchCondtion.Controls.Add(this.btnSearch);
             this.grpBoxSearchCondtion.Location = new System.Drawing.Point(10, 27);
             this.grpBoxSearchCondtion.Name = "grpBoxSearchCondtion";
-            this.grpBoxSearchCondtion.Size = new System.Drawing.Size(1038, 61);
+            this.grpBoxSearchCondtion.Size = new System.Drawing.Size(1038, 76);
             this.grpBoxSearchCondtion.TabIndex = 0;
             this.grpBoxSearchCondtion.TabStop = false;
             this.grpBoxSearchCondtion.Text = "检索条件";
             // 
             // textBoxChangesetNum
             // 
-            this.textBoxChangesetNum.Location = new System.Drawing.Point(685, 26);
+            this.textBoxChangesetNum.Location = new System.Drawing.Point(685, 47);
             this.textBoxChangesetNum.Name = "textBoxChangesetNum";
             this.textBoxChangesetNum.Size = new System.Drawing.Size(65, 21);
             this.textBoxChangesetNum.TabIndex = 14;
@@ -93,7 +97,7 @@
             this.checkBoxChangesetNum.AutoSize = true;
             this.checkBoxChangesetNum.Checked = true;
             this.checkBoxChangesetNum.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxChangesetNum.Location = new System.Drawing.Point(609, 28);
+            this.checkBoxChangesetNum.Location = new System.Drawing.Point(609, 49);
             this.checkBoxChangesetNum.Name = "checkBoxChangesetNum";
             this.checkBoxChangesetNum.Size = new System.Drawing.Size(78, 16);
             this.checkBoxChangesetNum.TabIndex = 13;
@@ -106,7 +110,7 @@
             this.checkBoxDate.AutoSize = true;
             this.checkBoxDate.Checked = true;
             this.checkBoxDate.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxDate.Location = new System.Drawing.Point(17, 28);
+            this.checkBoxDate.Location = new System.Drawing.Point(17, 49);
             this.checkBoxDate.Name = "checkBoxDate";
             this.checkBoxDate.Size = new System.Drawing.Size(66, 16);
             this.checkBoxDate.TabIndex = 12;
@@ -119,7 +123,7 @@
             this.checkBoxUser.AutoSize = true;
             this.checkBoxUser.Checked = true;
             this.checkBoxUser.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxUser.Location = new System.Drawing.Point(382, 28);
+            this.checkBoxUser.Location = new System.Drawing.Point(382, 49);
             this.checkBoxUser.Name = "checkBoxUser";
             this.checkBoxUser.Size = new System.Drawing.Size(54, 16);
             this.checkBoxUser.TabIndex = 11;
@@ -128,14 +132,14 @@
             // 
             // comboBoxUser
             // 
-            this.comboBoxUser.Location = new System.Drawing.Point(436, 26);
+            this.comboBoxUser.Location = new System.Drawing.Point(436, 47);
             this.comboBoxUser.Name = "comboBoxUser";
             this.comboBoxUser.Size = new System.Drawing.Size(111, 20);
             this.comboBoxUser.TabIndex = 9;
             // 
             // dateTimePickerTo
             // 
-            this.dateTimePickerTo.Location = new System.Drawing.Point(210, 26);
+            this.dateTimePickerTo.Location = new System.Drawing.Point(210, 47);
             this.dateTimePickerTo.Name = "dateTimePickerTo";
             this.dateTimePickerTo.Size = new System.Drawing.Size(111, 21);
             this.dateTimePickerTo.TabIndex = 8;
@@ -143,7 +147,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(195, 30);
+            this.label4.Location = new System.Drawing.Point(195, 51);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(17, 12);
             this.label4.TabIndex = 7;
@@ -151,7 +155,7 @@
             // 
             // dateTimePickerFrom
             // 
-            this.dateTimePickerFrom.Location = new System.Drawing.Point(83, 26);
+            this.dateTimePickerFrom.Location = new System.Drawing.Point(83, 47);
             this.dateTimePickerFrom.Name = "dateTimePickerFrom";
             this.dateTimePickerFrom.Size = new System.Drawing.Size(111, 21);
             this.dateTimePickerFrom.TabIndex = 5;
@@ -159,7 +163,7 @@
             // btnSearch
             // 
             this.btnSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSearch.Location = new System.Drawing.Point(943, 25);
+            this.btnSearch.Location = new System.Drawing.Point(943, 46);
             this.btnSearch.Margin = new System.Windows.Forms.Padding(11, 3, 3, 3);
             this.btnSearch.Name = "btnSearch";
             this.btnSearch.Size = new System.Drawing.Size(75, 23);
@@ -176,7 +180,7 @@
             this.lstViewSearchResult.CheckBoxes = true;
             this.lstViewSearchResult.Location = new System.Drawing.Point(10, 48);
             this.lstViewSearchResult.Name = "lstViewSearchResult";
-            this.lstViewSearchResult.Size = new System.Drawing.Size(1022, 104);
+            this.lstViewSearchResult.Size = new System.Drawing.Size(1022, 132);
             this.lstViewSearchResult.TabIndex = 1;
             this.lstViewSearchResult.UseCompatibleStateImageBehavior = false;
             this.lstViewSearchResult.View = System.Windows.Forms.View.Details;
@@ -184,7 +188,7 @@
             // btnCounter
             // 
             this.btnCounter.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnCounter.Location = new System.Drawing.Point(943, 158);
+            this.btnCounter.Location = new System.Drawing.Point(943, 186);
             this.btnCounter.Name = "btnCounter";
             this.btnCounter.Size = new System.Drawing.Size(75, 23);
             this.btnCounter.TabIndex = 2;
@@ -201,7 +205,7 @@
             this.textBoxOutput.Location = new System.Drawing.Point(10, 20);
             this.textBoxOutput.Name = "textBoxOutput";
             this.textBoxOutput.ReadOnly = true;
-            this.textBoxOutput.Size = new System.Drawing.Size(1022, 158);
+            this.textBoxOutput.Size = new System.Drawing.Size(1022, 115);
             this.textBoxOutput.TabIndex = 6;
             this.textBoxOutput.Text = "";
             // 
@@ -210,7 +214,7 @@
             this.splitContainer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.splitContainer1.Location = new System.Drawing.Point(0, 94);
+            this.splitContainer1.Location = new System.Drawing.Point(0, 109);
             this.splitContainer1.Name = "splitContainer1";
             this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
@@ -221,8 +225,8 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.groupBox2);
-            this.splitContainer1.Size = new System.Drawing.Size(1057, 386);
-            this.splitContainer1.SplitterDistance = 193;
+            this.splitContainer1.Size = new System.Drawing.Size(1057, 371);
+            this.splitContainer1.SplitterDistance = 221;
             this.splitContainer1.TabIndex = 7;
             // 
             // groupBox1
@@ -237,7 +241,7 @@
             this.groupBox1.Controls.Add(this.btnCounter);
             this.groupBox1.Location = new System.Drawing.Point(10, 3);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(1038, 187);
+            this.groupBox1.Size = new System.Drawing.Size(1038, 215);
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "变更集信息";
@@ -245,7 +249,7 @@
             // btnShowOutput
             // 
             this.btnShowOutput.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnShowOutput.Location = new System.Drawing.Point(10, 158);
+            this.btnShowOutput.Location = new System.Drawing.Point(10, 186);
             this.btnShowOutput.Name = "btnShowOutput";
             this.btnShowOutput.Size = new System.Drawing.Size(25, 23);
             this.btnShowOutput.TabIndex = 5;
@@ -283,7 +287,7 @@
             this.groupBox2.Controls.Add(this.textBoxOutput);
             this.groupBox2.Location = new System.Drawing.Point(10, 3);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(1038, 183);
+            this.groupBox2.Size = new System.Drawing.Size(1038, 140);
             this.groupBox2.TabIndex = 7;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "输出信息";
@@ -312,6 +316,25 @@
             this.MenuItem_About.Size = new System.Drawing.Size(214, 22);
             this.MenuItem_About.Text = "关于 TFS Code Counter(&A)";
             this.MenuItem_About.Click += new System.EventHandler(this.MenuItem_About_Click);
+            // 
+            // checkBoxLocation
+            // 
+            this.checkBoxLocation.AutoSize = true;
+            this.checkBoxLocation.Checked = true;
+            this.checkBoxLocation.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxLocation.Location = new System.Drawing.Point(17, 20);
+            this.checkBoxLocation.Name = "checkBoxLocation";
+            this.checkBoxLocation.Size = new System.Drawing.Size(66, 16);
+            this.checkBoxLocation.TabIndex = 15;
+            this.checkBoxLocation.Text = "源位置:";
+            this.checkBoxLocation.CheckedChanged += new System.EventHandler(this.checkBoxLocation_CheckedChanged);
+            // 
+            // comboBoxLocation
+            // 
+            this.comboBoxLocation.Location = new System.Drawing.Point(83, 18);
+            this.comboBoxLocation.Name = "comboBoxLocation";
+            this.comboBoxLocation.Size = new System.Drawing.Size(667, 20);
+            this.comboBoxLocation.TabIndex = 16;
             // 
             // frmMain
             // 
@@ -367,6 +390,8 @@
         private System.Windows.Forms.CheckBox checkBoxDate;
         private System.Windows.Forms.CheckBox checkBoxChangesetNum;
         private System.Windows.Forms.TextBox textBoxChangesetNum;
+        private System.Windows.Forms.CheckBox checkBoxLocation;
+        private System.Windows.Forms.ComboBox comboBoxLocation;
     }
 }
 
