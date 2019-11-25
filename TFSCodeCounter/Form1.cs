@@ -73,10 +73,10 @@ namespace TFSCodeCounter
             Configuration config = System.Configuration.ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
 
             // 源位置
-            config.AppSettings.Settings.Remove("location.path");
+            config.AppSettings.Settings.Remove(currentPrj.ServerItem);
             foreach (object obj in comboBoxLocation.Items)
             {
-                config.AppSettings.Settings.Add("location.path", obj.ToString());
+                config.AppSettings.Settings.Add(currentPrj.ServerItem, obj.ToString());
             }
 
             // 用户
@@ -653,13 +653,13 @@ namespace TFSCodeCounter
             Configuration config = System.Configuration.ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
 
             // 源位置
-            string sLocation = config.AppSettings.Settings["location.path"].Value;
-            if (sLocation.Trim() == "")
+            if (!config.AppSettings.Settings.AllKeys.Contains(currentPrj.ServerItem))
             {
                 comboBoxLocation.Items.Add(currentPrj.ServerItem);
             }
             else
             {
+                string sLocation = config.AppSettings.Settings[currentPrj.ServerItem].Value;
                 string[] sPaths = sLocation.Split(',');
                 foreach (string sPath in sPaths)
                 {
