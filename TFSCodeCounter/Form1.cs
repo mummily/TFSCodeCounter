@@ -78,6 +78,8 @@ namespace TFSCodeCounter
             {
                 config.AppSettings.Settings.Add(currentPrj.ServerItem, obj.ToString());
             }
+            config.AppSettings.Settings.Remove("location.selection");
+            config.AppSettings.Settings.Add("location.selection", comboBoxLocation.Text);
 
             // 用户
             config.AppSettings.Settings.Remove("user.name");
@@ -85,6 +87,8 @@ namespace TFSCodeCounter
             {
                 config.AppSettings.Settings.Add("user.name", obj.ToString());
             }
+            config.AppSettings.Settings.Remove("user.selection");
+            config.AppSettings.Settings.Add("user.selection", comboBoxUser.Text);
 
             // 变更集数
             config.AppSettings.Settings.Remove("changeset.number");
@@ -669,8 +673,17 @@ namespace TFSCodeCounter
                     }
                 }
             }
-            if (comboBoxLocation.Items.Count > 0)
-                comboBoxLocation.SelectedIndex = 0;
+
+            // 源位置 location.selection
+            string sLocationSelection = config.AppSettings.Settings["location.selection"].Value;
+            int nIndex = comboBoxLocation.Items.IndexOf(sLocationSelection);
+            if (nIndex != -1)
+                comboBoxLocation.SelectedIndex = nIndex;
+            else
+            {
+                if (comboBoxLocation.Items.Count > 0)
+                    comboBoxLocation.SelectedIndex = 0;
+            }
 
             // 查询用户 user.name
             string sUserName = config.AppSettings.Settings["user.name"].Value;
@@ -695,9 +708,15 @@ namespace TFSCodeCounter
                 }
             }
 
-            // 用户默认第一个
-            if (comboBoxUser.Items.Count > 0)
-                comboBoxUser.SelectedIndex = 0;
+            string sUserSelection = config.AppSettings.Settings["user.selection"].Value;
+            nIndex = comboBoxUser.Items.IndexOf(sUserSelection);
+            if (nIndex != -1)
+                comboBoxUser.SelectedIndex = nIndex;
+            else
+            {
+                if (comboBoxUser.Items.Count > 0)
+                    comboBoxUser.SelectedIndex = 0;
+            }
 
             // 变更集数 changeset.number 默认最新10条
             textBoxChangesetNum.Text = "10";
