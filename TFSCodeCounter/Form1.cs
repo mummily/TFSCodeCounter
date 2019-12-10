@@ -34,11 +34,15 @@ namespace TFSCodeCounter
         {
             lstViewSearchResult.FullRowSelect = true;
 
-            this.lstViewSearchResult.Columns.Add("序号", 50, HorizontalAlignment.Left);
-            this.lstViewSearchResult.Columns.Add("变更集", 60, HorizontalAlignment.Left);
-            this.lstViewSearchResult.Columns.Add("用户", 120, HorizontalAlignment.Left);
-            this.lstViewSearchResult.Columns.Add("日期", 150, HorizontalAlignment.Left);
-            this.lstViewSearchResult.Columns.Add("注释", 600, HorizontalAlignment.Left);
+            lstViewSearchResult.Columns.Add("SerialNo", "序号");
+            lstViewSearchResult.Columns.Add("ChangetSet", "变更集");
+            lstViewSearchResult.Columns.Add("User", "用户");
+            lstViewSearchResult.Columns.Add("DateTime", "日期");
+            lstViewSearchResult.Columns.Add("Comment", "注释");
+            lstViewSearchResult.Columns["SerialNo"].Width = 50;
+            lstViewSearchResult.Columns["ChangetSet"].Width = 60;
+            lstViewSearchResult.Columns["User"].Width = 120;
+            lstViewSearchResult.Columns["DateTime"].Width = 150;
         }
 
         /// <summary>
@@ -176,6 +180,9 @@ namespace TFSCodeCounter
                     item.SubItems.Add(changeSet.Comment);
                     this.lstViewSearchResult.Items.Add(item);
                 }
+
+                //自动适应宽度，-1根据内容设置宽度，-2根据标题设置宽度
+                lstViewSearchResult.Columns["Comment"].Width = -1;
 
                 if (-1 == comboBoxUser.Items.IndexOf(queryUser) && "" != queryUser.Trim())
                 {
