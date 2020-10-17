@@ -30,7 +30,7 @@
         {
             this.grpBoxSearchCondtion = new System.Windows.Forms.GroupBox();
             this.comboBoxLocation = new System.Windows.Forms.ComboBox();
-            this.checkBoxLocation = new System.Windows.Forms.CheckBox();
+            this.labelLocation = new System.Windows.Forms.Label();
             this.textBoxChangesetNum = new System.Windows.Forms.TextBox();
             this.checkBoxChangesetNum = new System.Windows.Forms.CheckBox();
             this.checkBoxDate = new System.Windows.Forms.CheckBox();
@@ -68,7 +68,7 @@
             this.grpBoxSearchCondtion.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.grpBoxSearchCondtion.Controls.Add(this.comboBoxLocation);
-            this.grpBoxSearchCondtion.Controls.Add(this.checkBoxLocation);
+            this.grpBoxSearchCondtion.Controls.Add(this.labelLocation);
             this.grpBoxSearchCondtion.Controls.Add(this.textBoxChangesetNum);
             this.grpBoxSearchCondtion.Controls.Add(this.checkBoxChangesetNum);
             this.grpBoxSearchCondtion.Controls.Add(this.checkBoxDate);
@@ -91,18 +91,6 @@
             this.comboBoxLocation.Name = "comboBoxLocation";
             this.comboBoxLocation.Size = new System.Drawing.Size(667, 20);
             this.comboBoxLocation.TabIndex = 16;
-            // 
-            // checkBoxLocation
-            // 
-            this.checkBoxLocation.AutoSize = true;
-            this.checkBoxLocation.Checked = true;
-            this.checkBoxLocation.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxLocation.Location = new System.Drawing.Point(17, 20);
-            this.checkBoxLocation.Name = "checkBoxLocation";
-            this.checkBoxLocation.Size = new System.Drawing.Size(66, 16);
-            this.checkBoxLocation.TabIndex = 15;
-            this.checkBoxLocation.Text = "源位置:";
-            this.checkBoxLocation.CheckedChanged += new System.EventHandler(this.checkBoxLocation_CheckedChanged);
             // 
             // textBoxChangesetNum
             // 
@@ -330,7 +318,7 @@
             this.MenuItem_Help});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1057, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1057, 25);
             this.menuStrip1.TabIndex = 8;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -339,15 +327,24 @@
             this.MenuItem_Help.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.MenuItem_About});
             this.MenuItem_Help.Name = "MenuItem_Help";
-            this.MenuItem_Help.Size = new System.Drawing.Size(59, 20);
+            this.MenuItem_Help.Size = new System.Drawing.Size(61, 21);
             this.MenuItem_Help.Text = "帮助(&H)";
             // 
             // MenuItem_About
             // 
             this.MenuItem_About.Name = "MenuItem_About";
-            this.MenuItem_About.Size = new System.Drawing.Size(214, 22);
+            this.MenuItem_About.Size = new System.Drawing.Size(225, 22);
             this.MenuItem_About.Text = "关于 TFS Code Counter(&A)";
             this.MenuItem_About.Click += new System.EventHandler(this.MenuItem_About_Click);
+            // 
+            // labelLocation
+            // 
+            this.labelLocation.AutoSize = true;
+            this.labelLocation.Location = new System.Drawing.Point(33, 21);
+            this.labelLocation.Name = "labelLocation";
+            this.labelLocation.Size = new System.Drawing.Size(47, 12);
+            this.labelLocation.TabIndex = 17;
+            this.labelLocation.Text = "源位置:";
             // 
             // frmMain
             // 
@@ -403,9 +400,9 @@
         private System.Windows.Forms.CheckBox checkBoxDate;
         private System.Windows.Forms.CheckBox checkBoxChangesetNum;
         private System.Windows.Forms.TextBox textBoxChangesetNum;
-        private System.Windows.Forms.CheckBox checkBoxLocation;
         private System.Windows.Forms.ComboBox comboBoxLocation;
         private System.Windows.Forms.Button btnCounterAll;
+        private System.Windows.Forms.Label labelLocation;
     }
 }
 

@@ -99,8 +99,6 @@ namespace TFSCodeCounter
             config.AppSettings.Settings.Add("changeset.number", textBoxChangesetNum.Text);
 
             // CheckBox是否选中
-            config.AppSettings.Settings.Remove("location.checked");
-            config.AppSettings.Settings.Add("location.checked", checkBoxLocation.Checked.ToString());
             config.AppSettings.Settings.Remove("user.checked");
             config.AppSettings.Settings.Add("user.checked", checkBoxUser.Checked.ToString());
             config.AppSettings.Settings.Remove("datetime.checked");
@@ -127,8 +125,6 @@ namespace TFSCodeCounter
             // 清空结果视图
             lstViewSearchResult.Items.Clear();
             checkBoxCheckAllNot.Checked = true;
-            if (checkBoxLocation.Checked && comboBoxLocation.Text.Trim() == "")
-                comboBoxLocation.SelectedIndex = 0;
 
             DateTime dtFrom = new DateTime(dateTimePickerFrom.Value.Year, dateTimePickerFrom.Value.Month, dateTimePickerFrom.Value.Day, 0, 0, 0);
             DateTime dtTo = new DateTime(dateTimePickerTo.Value.Year, dateTimePickerTo.Value.Month, dateTimePickerTo.Value.Day, 23, 59, 59);
@@ -137,9 +133,10 @@ namespace TFSCodeCounter
             {
                 int maxCount = checkBoxChangesetNum.Checked ? int.Parse(textBoxChangesetNum.Text) : int.MaxValue;
                 string queryUser = checkBoxUser.Checked ? comboBoxUser.Text.Trim() : "";
-                string path = checkBoxLocation.Checked ? comboBoxLocation.Text.Trim() : currentPrj.ServerItem;
+                string path = comboBoxLocation.Text.Trim();
 
                 VersionControlServer vcs = currentPrj.VersionControlServer;
+                currentPrj = vcs.GetTeamProjectForServerPath(path);
                 var changeSets = vcs.QueryHistory(path,
                       VersionSpec.Latest,
                       0,
@@ -647,16 +644,6 @@ namespace TFSCodeCounter
         }
 
         /// <summary>
-        /// 源位置改变
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void checkBoxLocation_CheckedChanged(object sender, EventArgs e)
-        {
-            comboBoxLocation.Enabled = checkBoxLocation.Checked;
-        }
-
-        /// <summary>
         /// 初始化应用设置
         /// </summary>
         private void InitSetting()
@@ -739,10 +726,6 @@ namespace TFSCodeCounter
             bChecked = true;
             Boolean.TryParse(config.AppSettings.Settings["user.checked"].Value.ToString(), out bChecked);
             checkBoxUser.Checked = bChecked;
-            // 查询源位置 location.checked
-            bChecked = true;
-            Boolean.TryParse(config.AppSettings.Settings["location.checked"].Value.ToString(), out bChecked);
-            checkBoxLocation.Checked = bChecked;
             // 查询变更集数 changeset.checked
             bChecked = true;
             Boolean.TryParse(config.AppSettings.Settings["changeset.checked"].Value.ToString(), out bChecked);
